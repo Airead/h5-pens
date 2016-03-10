@@ -1,0 +1,27 @@
+{
+  "name": "h5-pens",
+  "version": "1.0.0",
+  "description": "airead html5 code pens",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Airead/h5-pens.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Airead/h5-pens/issues"
+  },
+  "homepage": "https://github.com/Airead/h5-pens#readme",
+  "devDependencies": {
+    "browser-sync": "^2.11.1",
+    "gulp": "^3.9.1"
+  },
+  "dependencies": {
+    "eslint": "^2.3.0"
+  }
+}
