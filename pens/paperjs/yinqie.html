@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>音切演示</title>
+    <style media="screen">
+        html,
+        body {
+            margin: 0;
+            overflow: hidden;
+            height: 100%;
+        }
+        /* Scale canvas with resize attribute to full size */
+
+        canvas[resize] {
+            width: 400px;
+            height: 400px;
+        }
+    </style>
+    <script type="text/javascript" src="../../js/paper/paper-full.min.js"></script>
+    <script type="text/javascript" canvas="myCanvas">
+        paper.install(window);
+        window.onload = function() {
+            paper.setup('myCanvas');
+            main();
+        }
+
+        var totalMs = 4500;
+
+        function main() {
+            var center = new Point(200, 200);
+            var radius = 100;
+            var smallRadius = 5;
+            var path = new Path.Circle(center, radius);
+            path.strokeColor = 'black';
+
+            var circles = createCircles(center, radius, smallRadius);
+
+            var ball = createBall(center, radius, smallRadius);
+
+            view.draw();
+
+            view.onFrame = function(event) {
+                // console.log('onFrame', event.time);
+                var curMs = (event.time * 1000) % 4500;
+                ball.angle = (360 / 4500) * curMs;
+                // console.log('ball.angle', ball.angle, addAngle);
+                ball.position = getPosByAngle(center, radius, ball.angle);
+                animateCircle(circles[0], ball.angle);
+            }
+        }
+
+        function createCircles(center, pathRadius, smallRadius) {
+            var angles = [0, 80, 160, 200, 240];
+            var circles = [];
+            angles.forEach(function(angle) {
+                var pos = getPosByAngle(center, pathRadius, angle);
+                // console.log('pos ', angle,  pos.angle, pos);
+                var circle = new Path.Circle(pos, smallRadius);
+                circle.angle = angle;
+                circle.fillColor = '#000';
+                circles.push(circle);
+            });
+
+            return circles;
+        }
+
+        function createBall(center, pathRadius, radius) {
+            var pos = getPosByAngle(center, pathRadius, 0);
+            var ball = new Path.Circle(pos, radius);
+            ball.angle = 0;
+            ball.fillColor = '#DDB02B';
+            return ball;
+        }
+
+        var t = new Point(0, 1);
+
+        function getPosByAngle(center, len, angle) {
+            angle += 90;
+            var deg = Math.PI / 180 * angle;
+            var pos = new Point(-Math.cos(deg), -Math.sin(deg));
+            pos.length = len;
+
+            pos = pos.add(center);
+
+            return pos;
+        }
+
+        function animateCircle(circle, curangle) {
+            var size = 40;
+            if (circle.angle < curangle && circle.angle + 40 > curangle) {
+                console.log('set radius')
+                circle.scale = 2;
+            }
+        }
+
+    </script>
+</head>
+
+<body>
+    <canvas id="myCanvas" resize></canvas>
+</body>
+
+</html>

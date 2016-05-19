@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>percent circle</title>
+
+    <style>
+        body {
+            background: black;
+        }
+
+        .wrapper {
+            width: 250px;
+            height: 250px;
+            position: relative;
+            background: white;
+        }
+
+        .pie {
+            width: 50%;
+            height: 100%;
+            position: absolute;
+            border: 10px solid rgba(0, 0, 0, .4);
+        }
+
+        .spinner {
+            border-radius: 125px 0 0 125px;
+            z-index: 200;
+            border-right: none;
+        }
+
+        .filler {
+            border-radius: 0 125px 125px 0;
+            z-index: 100;
+            left: 50%;
+            border-left: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrapper">
+        <div class="pie spinner"></div>
+        <div class="pie filler"></div>
+        <div class="mask"></div>
+    </div>
+</body>
+
+</html>
