@@ -15,9 +15,23 @@
         }
         /* Scale canvas with resize attribute to full size */
 
-        canvas[resize] {
-            width: 400px;
-            height: 400px;
+        .container {
+            margin: auto;
+            width: 100%;
+        }
+
+        canvas {
+            width: 300px;
+            height: 300px;
+            display: block;
+            margin: auto;
+        }
+
+        #footer {
+            position: fixed;
+            right: 30px;
+            bottom: 20px;
+            color: #A9A9A9;
         }
     </style>
     <script type="text/javascript" src="../../js/paper/paper-full.min.js"></script>
@@ -29,11 +43,11 @@
         }
 
         var totalMs = 4500;
+        var radius = 100;
+        var smallRadius = 5;
 
         function main() {
-            var center = new Point(200, 200);
-            var radius = 100;
-            var smallRadius = 5;
+            var center = new Point(150, 150);
             var path = new Path.Circle(center, radius);
             path.strokeColor = 'black';
 
@@ -49,7 +63,9 @@
                 ball.angle = (360 / 4500) * curMs;
                 // console.log('ball.angle', ball.angle, addAngle);
                 ball.position = getPosByAngle(center, radius, ball.angle);
-                animateCircle(circles[0], ball.angle);
+                circles.forEach(function(circle) {
+                    animateCircle(circle, ball.angle);
+                });
             }
         }
 
@@ -60,6 +76,7 @@
                 var pos = getPosByAngle(center, pathRadius, angle);
                 // console.log('pos ', angle,  pos.angle, pos);
                 var circle = new Path.Circle(pos, smallRadius);
+                circle.originScale = 1;
                 circle.angle = angle;
                 circle.fillColor = '#000';
                 circles.push(circle);
@@ -91,17 +108,28 @@
 
         function animateCircle(circle, curangle) {
             var size = 40;
-            if (circle.angle < curangle && circle.angle + 40 > curangle) {
+            var oldScale = circle.originScale;
+            if (circle.angle < curangle && circle.angle + 8 > curangle) {
                 console.log('set radius')
-                circle.scale = 2;
+                var setWidth = smallRadius + (curangle - circle.angle);
+                var scale = setWidth / smallRadius / circle.originScale;
+                circle.originScale = scale;
+                circle.scale(1 / oldScale * scale);
+            } else {
+                circle.originScale = 1;
+                circle.scale(1 / oldScale);
             }
         }
-
     </script>
 </head>
 
 <body>
-    <canvas id="myCanvas" resize></canvas>
+    <div class="container">
+        <canvas id="myCanvas"></canvas>
+    </div>
+    <div id="footer">
+        <span>by Airead</span>
+    </div>
 </body>
 
 </html>
