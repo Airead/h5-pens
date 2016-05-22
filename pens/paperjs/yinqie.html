@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <title>音切演示</title>
+    <style media="screen">
+        html,
+        body {
+            margin: 0;
+            overflow: hidden;
+            height: 100%;
+        }
+        /* Scale canvas with resize attribute to full size */
+
+        .container {
+            margin: auto;
+            width: 100%;
+        }
+
+        canvas {
+            width: 300px;
+            height: 300px;
+            display: block;
+            margin: auto;
+        }
+
+        #footer {
+            position: fixed;
+            right: 30px;
+            bottom: 20px;
+            color: #A9A9A9;
+        }
+    </style>
+    <script type="text/javascript" src="../../js/paper/paper-full.min.js"></script>
+    <script type="text/javascript" canvas="myCanvas">
+        paper.install(window);
+        window.onload = function() {
+            paper.setup('myCanvas');
+            main();
+        }
+
+        var totalMs = 4500;
+        var radius = 100;
+        var smallRadius = 5;
+
+        function main() {
+            var center = new Point(150, 150);
+            var path = new Path.Circle(center, radius);
+            path.strokeColor = 'black';
+
+            var circles = createCircles(center, radius, smallRadius);
+
+            var ball = createBall(center, radius, smallRadius);
+
+            view.draw();
+
+            view.onFrame = function(event) {
+                // console.log('onFrame', event.time);
+                var curMs = (event.time * 1000) % 4500;
+                ball.angle = (360 / 4500) * curMs;
+                // console.log('ball.angle', ball.angle, addAngle);
+                ball.position = getPosByAngle(center, radius, ball.angle);
+                circles.forEach(function(circle) {
+                    animateCircle(circle, ball.angle);
+                });
+            }
+        }
+
+        function createCircles(center, pathRadius, smallRadius) {
+            var angles = [0, 80, 160, 200, 240];
+            var circles = [];
+            angles.forEach(function(angle) {
+                var pos = getPosByAngle(center, pathRadius, angle);
+                // console.log('pos ', angle,  pos.angle, pos);
+                var circle = new Path.Circle(pos, smallRadius);
+                circle.originScale = 1;
+                circle.angle = angle;
+                circle.fillColor = '#000';
+                circles.push(circle);
+            });
+
+            return circles;
+        }
+
+        function createBall(center, pathRadius, radius) {
+            var pos = getPosByAngle(center, pathRadius, 0);
+            var ball = new Path.Circle(pos, radius);
+            ball.angle = 0;
+            ball.fillColor = '#DDB02B';
+            return ball;
+        }
+
+        var t = new Point(0, 1);
+
+        function getPosByAngle(center, len, angle) {
+            angle += 90;
+            var deg = Math.PI / 180 * angle;
+            var pos = new Point(-Math.cos(deg), -Math.sin(deg));
+            pos.length = len;
+
+            pos = pos.add(center);
+
+            return pos;
+        }
+
+        function animateCircle(circle, curangle) {
+            var size = 40;
+            var oldScale = circle.originScale;
+            if (circle.angle < curangle && circle.angle + 8 > curangle) {
+                console.log('set radius')
+                var setWidth = smallRadius + (curangle - circle.angle);
+                var scale = setWidth / smallRadius / circle.originScale;
+                circle.originScale = scale;
+                circle.scale(1 / oldScale * scale);
+            } else {
+                circle.originScale = 1;
+                circle.scale(1 / oldScale);
+            }
+        }
+    </script>
+</head>
+
+<body>
+    <div class="container">
+        <canvas id="myCanvas"></canvas>
+    </div>
+    <div id="footer">
+        <span>by Airead</span>
+    </div>
+</body>
+
+</html>

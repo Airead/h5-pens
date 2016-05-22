@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>test paperjs</title>
+    <!-- Load the Paper.js library -->
+    <script type="text/javascript" src="../../js/paper/paper-full.min.js"></script>
+    <!-- Define inlined PaperScript associate it with myCanvas -->
+    <script type="text/paperscript" canvas="myCanvas">
+        // Create a Paper.js Path to draw a line into it:
+        var path = new Path();
+        // Give the stroke a color
+        path.strokeColor = 'black';
+        var start = new Point(100, 100);
+        // Move to start and draw a line from there
+        path.moveTo(start);
+        // Note the plus operator on Point objects.
+        // PaperScript does that for us, and much more!
+        // path.add(start + [100, -50]);
+
+        function onMouseDrag(event) {
+            path.add(event.point);
+        }
+
+        // function onMouseDrag(event) {
+        //         // The radius is the distance between the position
+        //         // where the user clicked and the current position
+        //         // of the mouse.
+        //         var path = new Path.Circle({
+        //             center: event.downPoint,
+        //             radius: (event.downPoint - event.point).length,
+        //             fillColor: 'white',
+        //             strokeColor: 'black'
+        //         });
+        //
+        //         // Remove this path on the next drag event:
+        //         path.removeOnDrag();
+        //     };
+    </script>
+
+<style>
+    html,
+    body {
+        margin: 0;
+        overflow: hidden;
+        height: 100%;
+    }
+
+    canvas[resize] {
+        width: 100%;
+        height: 100%;
+    }
+</style>
+</head>
+
+<body>
+    <canvas id="myCanvas" resize></canvas>
+</body>
+
+</html>
