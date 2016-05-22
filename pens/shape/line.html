@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>line</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            color: white;
+            margin: 0;
+            padding: 0;
+            background: black;
+        }
+
+        .container {
+            position: relative;
+            top: 90px;
+            padding: 10px 0;
+            margin: auto;
+            width: 750px;
+            background: black;
+        }
+
+        .line {
+            width: 100%;
+            height: 45px;
+            border-top: 1px solid white;
+            border-bottom: 1px solid white;
+            margin-bottom: 13px;
+        }
+
+        .balls {
+            position: absolute;
+            width: 250px;
+            top: 22px;
+            left: 0px;
+            padding-left: 23px;
+        }
+
+        .ball {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: white;
+            float: left;
+        }
+
+        .green {
+            background: lime;
+        }
+
+        .red {
+            background: red;
+        }
+
+        .middle-line {
+            width: 70px;
+            height: 2px;
+            float: left;
+            background: white;
+            position: relative;
+            top: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div id="balls" class="balls">
+            <div class="ball green"></div>
+            <div class="middle-line"></div>
+            <div class="ball red"></div>
+            <div class="middle-line"></div>
+            <div class="ball green"></div>
+        </div>
+        <div class="line"></div>
+        <div class="line"></div>
+        <div class="line"></div>
+        <div class="line"></div>
+        <div class="line"></div>
+        <div class="line"></div>
+        <div class="line"></div>
+        <div class="line"></div>
+        <div class="line"></div>
+        <div class="line"></div>
+    </div>
+
+    <script>
+        var i;
+        var j;
+        var lineWidth = 750;
+        var nextHeight = 58;
+        var lineTotal = 10;
+        var glanceTotal = 3;
+        var balls = document.getElementById('balls');
+
+        var curLine = 0;
+        var glanceIndex = 0;
+
+        tick(333);
+
+
+        function tick(delay) {
+            delay = delay || 1000;
+            // console.log('tick');
+            next();
+            setTimeout(function() {
+                tick(delay);
+            }, delay);
+        }
+
+        function next() {
+            glanceIndex += 1;
+            if (glanceIndex >= glanceTotal) {
+                glanceIndex = 0;
+                curLine += 1;
+            }
+
+            if (curLine >= lineTotal) {
+                curLine = 0;
+            }
+
+            var top = curLine * nextHeight + 22;
+            var left = (lineWidth / glanceTotal) * glanceIndex;
+
+            console.log(glanceIndex, curLine, top, left);
+
+            balls.style.left = left + 'px';
+            balls.style.top = top + 'px';
+        }
+
+    </script>
+</body>
+</html>
