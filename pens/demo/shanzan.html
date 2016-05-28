@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <title>善赞</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .container {
+            background: #4A4A4A;
+            font-family: sans-serif;
+            padding-bottom: 1px;
+        }
+
+        .banners {
+            width: 100%;
+            overflow: hidden;
+        }
+
+        .sliders {
+            height: 186px;
+            width: 100%;
+            position: relative;
+        }
+
+        .circles {
+            position: absolute;
+            z-index: 999;
+            opacity: .5;
+            bottom: 12px;
+            right: 18px;
+        }
+
+        .circle {
+            width: 8px;
+            height: 8px;
+            background: white;
+            border-radius: 50%;
+            float: left;
+            margin-left: 2px;
+        }
+
+        .banner {
+            width: 100%;
+            display: none;
+            position: absolute;
+        }
+
+        .banner.active {
+            display: block;
+        }
+
+        .banner img {
+            width: 100%;
+        }
+
+        .buttons {
+            text-align: center;
+            margin: 0 9px;
+        }
+
+        .buttons:after {
+            content: "";
+            display: block;
+            clear: both;
+        }
+
+        .buttons a {
+            float: left;
+            width: 50%;
+            display: block;
+            margin-top: 22px;
+            padding: 0 6px;
+        }
+
+        .buttons img {
+            width: 100%;
+        }
+
+        .introduce {
+            margin: 22px 15px 12px;
+            background: white;
+            padding: 12px;
+            border-radius: 2px;
+        }
+
+        .introduce .header .brand img {
+            float: left;
+            margin-right: 4px;
+            width: 38px;
+        }
+
+        .introduce h1,
+        .introduce h2 {
+            font-weight: normal;
+        }
+
+        .introduce h1 {
+            font-size: 18px;
+            line-height: 38px;
+        }
+
+        .introduce h1 span {
+            font-size: 14px;
+            color: #818181;
+        }
+
+        .introduce h2 {
+            font-size: 14px;
+        }
+
+        .introduce p {
+            font-size: 14px;
+            line-height: 1.5em;
+            font-family: serif;
+            margin-top: 5px;
+        }
+
+        .introduce .header .brand:after {
+            content: "";
+            display: block;
+            clear: both;
+        }
+
+        .introduce .header h2 {
+            margin: 12px 0 4px;
+        }
+
+        .introduce .content {
+            color: #818181;
+        }
+
+        .footer {
+            color: #9b9b9b;
+            font-size: 14px;
+            line-height: 17px;
+            text-align: center;
+            margin-bottom: 12px;
+        }
+
+        .footer img {
+            height: 17px;
+            position: relative;
+            top: 3px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="banners">
+            <ul id="sliders" class="sliders">
+                <li id="b1" class="banner active">
+                    <img src="image/shanzan_banner1.png" alt="">
+                </li>
+                <li id="b2" class="banner">
+                    <img src="image/shanzan_banner2.png" alt="">
+                </li>
+                <div class="circles">
+                    <div id="c1" class="circle"></div>
+                    <div id="c2" class="circle"></div>
+                </div>
+            </ul>
+        </div>
+        <div class="buttons">
+            <a href="#">
+                <img src="image/shanzan_ios.png" alt="">
+            </a>
+            <a href="#">
+                <img src="image/shanzan_android.png" alt="">
+            </a>
+            <a href="#" style="margin-top: 12px;">
+                <img src="image/shanzan_pc.png" alt="">
+            </a>
+        </div>
+        <div class="introduce">
+            <div class="header">
+                <div class="brand">
+                    <img src="image/shanzan_logo.png" alt="">
+                    <h1>善赞 <span>一个致力于发扬善的网络工具</span></h1>
+                </div>
+            </div>
+            <div class="content">
+                <p>
+                    “善赞”是一款手机客户端，由太赞（北京）网络科技有限公司开发。主要目的是通过市场竞争的方式优化公益活动，谱写“善”的赞歌，体现“善有善报”。
+                </p>
+                <p>
+                    善心人士可以在通过“善赞”客户端发现身边的，由政府、非营利组织、社会组织、志愿者组织发起的公益项目活动，并可以通过“善赞”申请参与这些公益活动；也可以自己通过“善赞”发起帮助需求，让其他人发现并帮助自己；同时也可以将参加某些有奖励的公益活动所得奖励捐助给募捐项目，实现一个行动的两个“善”。“善赞”客户端的用户还可以通过“善赞”组建自己的公益团队，开展志趣相投的活动。
+                </p>
+                <p>
+                    更重要的是，“善赞”是您的“善行”的忠实记录者，在多年之后，您可以通过这个平台再现某年某月的某一天曾经做过的公益，帮您建立一个自己的公益行动档案。</p>
+                </p>
+            </div>
+        </div>
+        <div class="footer">
+            <span><img src="image/mail.png" alt="">
+                客服邮箱: shanzanfuwu@126.com</span>
+        </div>
+    </div>
+    <script>
+        main();
+
+        function main() {
+            var width = getScreenWidth();
+            var height = parseInt(width / 4 * 3);
+            var sliders = document.getElementById('sliders');
+            var banner1 = document.getElementById('b1');
+            banner1.circle = document.getElementById('c1')
+            var banner2 = document.getElementById('b2');
+            banner2.circle = document.getElementById('c2')
+
+            console.log('w,h', width, height);
+
+            sliders.style.height = height + 'px';
+
+            var left = banner1;
+            var right = banner2;
+
+            left.circle.style.background = 'black';
+            right.circle.style.background = 'white';
+
+            setInterval(function() {
+                right.circle.style.background = 'black';
+                left.circle.style.background = 'white';
+                slider(left, right, function() {
+                    var tmp = left;
+                    left = right;
+                    right = tmp;
+                });
+            }, 3000);
+
+            function slider(banner1, banner2, done) {
+                banner1.style.left = '0';
+                banner2.style.left = "100%";
+                banner2.style.display = 'block';
+
+                var curLeft = 0;
+
+                animate(10, 2);
+
+                function animate(delay, step) {
+                    if (curLeft === 100) {
+                        return done();
+                    }
+
+                    curLeft += step;
+
+                    if (curLeft > 100) {
+                        curLeft = 100;
+                    }
+
+                    banner1.style.left = (curLeft * -1) + '%';
+                    banner2.style.left = (100 - curLeft) + '%';
+
+                    setTimeout(function() {
+                        animate(delay, step);
+                    }, delay);
+                }
+            }
+        }
+
+        function getScreenWidth() {
+            var w = window,
+                d = document,
+                e = d.documentElement,
+                g = d.getElementsByTagName('body')[0],
+                x = w.innerWidth || e.clientWidth || g.clientWidth;
+            // y = w.innerHeight || e.clientHeight || g.clientHeight;
+
+            return x;
+        }
+    </script>
+</body>
+
+</html>
