@@ -81,12 +81,16 @@
             padding: 0 6px;
         }
 
+        .pc-button {
+            margin-top: 12px;
+        }
+
         .buttons img {
             width: 100%;
         }
 
         .introduce {
-            margin: 22px 15px 12px;
+            margin: 22px 0px 12px;
             background: white;
             padding: 12px;
             border-radius: 2px;
@@ -121,7 +125,7 @@
             font-size: 14px;
             line-height: 1.5em;
             font-family: serif;
-            margin-top: 5px;
+            margin-top: 10px;
         }
 
         .introduce .header .brand:after {
@@ -151,6 +155,40 @@
             position: relative;
             top: 3px;
         }
+
+        .sm-show {
+            display: block;
+        }
+
+        @media (min-width: 768px) {
+            .sm-show {
+                display: none;
+            }
+            .md-show {
+                display: block;
+            }
+            .banners {
+                /*max-width: 800px;*/
+                margin: auto;
+            }
+            .buttons {
+                text-align: center;
+                margin: 0 82px;
+            }
+            .buttons a {
+                float: left;
+                width: 33.3333%;
+                display: block;
+                margin-top: 22px;
+                padding: 0 8px;
+            }
+            .pc-button {
+                margin-top: 0px;
+            }
+            .introduce {
+                padding: 12px 34px;
+            }
+        }
     </style>
 </head>
 
@@ -159,10 +197,10 @@
         <div class="banners">
             <ul id="sliders" class="sliders">
                 <li id="b1" class="banner active">
-                    <img src="image/shanzan_banner1.png" alt="">
+                    <img id="b1-img" src="image/shanzan_banner1.png" alt="">
                 </li>
                 <li id="b2" class="banner">
-                    <img src="image/shanzan_banner2.png" alt="">
+                    <img id="b2-img" src="image/shanzan_banner2.png" alt="">
                 </li>
                 <div class="circles">
                     <div id="c1" class="circle"></div>
@@ -177,7 +215,7 @@
             <a href="#">
                 <img src="image/shanzan_android.png" alt="">
             </a>
-            <a href="#" style="margin-top: 12px;">
+            <a href="#" class="pc-button">
                 <img src="image/shanzan_pc.png" alt="">
             </a>
         </div>
@@ -213,13 +251,19 @@
             var height = parseInt(width / 4 * 3);
             var sliders = document.getElementById('sliders');
             var banner1 = document.getElementById('b1');
+            banner1.img = document.getElementById('b1-img');
             banner1.circle = document.getElementById('c1')
             var banner2 = document.getElementById('b2');
+            banner2.img = document.getElementById('b2-img');
             banner2.circle = document.getElementById('c2')
 
             console.log('w,h', width, height);
 
             sliders.style.height = height + 'px';
+            banner1.img.style.height = height + 'px';
+            banner2.img.style.height = height + 'px';
+
+            autoResize();
 
             var left = banner1;
             var right = banner2;
@@ -264,6 +308,29 @@
                         animate(delay, step);
                     }, delay);
                 }
+            }
+
+            function autoResize() {
+                var width = getScreenWidth();
+                var height = parseInt(width / 4 * 3);
+
+                if (width >= 768) {
+                    // width = 800;
+                    height = parseInt(width / 3);
+                    banner1.img.src = 'image/pcbanner1.png';
+                    banner2.img.src = 'image/pcbanner2.png';
+                } else {
+                    height = parseInt(width / 4 * 3);
+                    banner1.img.src = 'image/shanzan_banner1.png';
+                    banner2.img.src = 'image/shanzan_banner2.png';
+                }
+
+                banner1.img.style.height = height + 'px';
+                banner2.img.style.height = height + 'px';
+                sliders.style.height = height + 'px';
+                setTimeout(function() {
+                    autoResize();
+                }, 500);
             }
         }
 
