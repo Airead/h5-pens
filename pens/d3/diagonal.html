@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>test d3</title>
+    <script src="../../js/d3/d3.js" charset="utf-8"></script>
+    <style>
+        path {
+            fill: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <script type="text/javascript">
+        var w = 900;
+        var h = 400;
+        var svg = d3.select('body').append('svg')
+            .attr('width', w)
+            .attr('height', h)
+            .style('background', 'none');
+
+        svg.append('rect')
+            .attr('width', w)
+            .attr('height', h)
+            .attr('fill', 'none')
+            .attr('stroke-width', 1)
+            .attr('stroke', 'black');
+
+        var d1 = d3.svg.diagonal()
+            .source({
+                x: w / 2,
+                y: 0
+            })
+            .target({
+                x: w / 4,
+                y: h / 4
+            });
+
+        svg.append('path')
+            .attr('stroke', 'blue')
+            .attr('stroke-width', 10)
+            .attr('d', d1);
+
+
+        svg.append("path")
+            .attr("stroke", "red")
+            .attr("stroke-width", "10")
+            .attr("d", d3.svg.diagonal()
+                .source({
+                    "x": w / 2,
+                    "y": 0
+                })
+                .target({
+                    "x": 3 * w / 4,
+                    "y": h / 4
+                })
+            );
+
+        svg.append("path")
+            .attr("stroke", "blue")
+            .attr("stroke-width", "6")
+            .attr("d", d3.svg.diagonal()
+                .source({
+                    "x": w / 4,
+                    "y": h / 4
+                })
+                .target({
+                    "x": w / 8,
+                    "y": 2 * h / 4
+                })
+            );
+
+        svg.append("path")
+            .attr("stroke", "blue")
+            .attr("stroke-width", "4")
+            .attr("d", d3.svg.diagonal()
+                .source({
+                    "x": w / 4,
+                    "y": h / 4
+                })
+                .target({
+                    "x": 3 * w / 8,
+                    "y": 2 * h / 4
+                })
+            );
+    </script>
+</body>
+
+</html>
