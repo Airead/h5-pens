@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Document</title>
+        <style>
+         html, body {
+             maring: 0;
+             padding: 0;
+             width: 100%;
+             height: 100%;
+         }
+
+         h1 {
+             display: block;
+             width: 100%;
+             position: absolute;
+             top: 50%;
+             text-align: center;
+             font-size: 50px;
+         }
+        </style>
+    </head>
+    <body>
+        <h1 id="ret">
+            ret
+        </h1>
+
+        <script>
+         var arr = [
+             '树',
+             '电灯开关',
+             '凳子',
+             '汽车',
+             '手套',
+             '枪',
+             '骰子',
+             '溜冰鞋',
+             '猫',
+             '保龄球',
+             '球门',
+             '蛋',
+             '女巫',
+             '戒指',
+             '薪水',
+             '糖果',
+             '杂志',
+             '投票亭',
+             '高尔夫俱乐部',
+             '香烟',
+         ];
+
+         document.onkeyup = updateContent;
+         document.onclick = updateContent;
+
+         function updateContent() {
+             var index = randInt(0, 20);
+             var isText = randInt(0, 2) < 1;
+
+             var newContent = index;
+             if (isText) {
+                 newContent = arr[index];
+             }
+             updateRet(newContent);
+         }
+
+         function randInt(lo, hi) {
+             return parseInt(Math.random() * (hi - lo) + lo);
+         }
+
+         function updateRet(content){
+             var ret = document.getElementById('ret');
+             ret.innerHTML = content;
+         }
+        </script>
+    </body>
+</html>
