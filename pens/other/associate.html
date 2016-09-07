@@ -54,15 +54,22 @@
          document.onkeyup = updateContent;
          document.onclick = updateContent;
 
+         // setInterval(updateContent, 10000);
+
          function updateContent() {
+             updateRet(getNewContent());
+         }
+
+         function getNewContent() {
              var index = randInt(0, 20);
              var isText = randInt(0, 2) < 1;
 
-             var newContent = index;
+             var newContent = index + 1;
              if (isText) {
                  newContent = arr[index];
              }
-             updateRet(newContent);
+
+             return newContent;
          }
 
          function randInt(lo, hi) {
