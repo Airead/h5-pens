@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Document</title>
+        <title>基本</title>
         <style>
          html, body {
              margin: 0;
@@ -20,6 +20,24 @@
              height: 100%;
              top: 0;
              left: 0;
+         }
+
+         .action {
+             position: absolute;
+             right: 0;
+             top: 0;
+             z-index: 9999;
+         }
+
+         .action span {
+             text-decoration: none;
+             color: #999;
+         }
+
+         .page {
+             width: 100%;
+             height: 100%;
+             overflow: auto;
          }
 
          .text {
@@ -47,26 +65,47 @@
              text-align: right;
              width: 100%;
          }
+
+         .num2text {
+             width: 80%;
+             background: rgba(244, 231, 214, 1);
+         }
+
+         .text2num {
+             width: 80%;
+             background: rgba(202, 223, 242, 1);
+         }
         </style>
     </head>
     <body>
+        <div class="action">
+            <span id="random">random</span>
+        </div>
         <div class="container">
-            <div id="num" class="text">
-                <h1 id="num-value">num</h1>
+            <div class="page random">
+                <div id="num" class="text">
+                    <h1 id="num-value">num</h1>
+                </div>
+                <div id="text" class="text">
+                    <h1 id="text-value">text</h1>
+                </div>
             </div>
-            <div id="text" class="text">
-                <h1 id="text-value">text</h1>
+            <div class="page num2text" id="num2text">
+                num2text
+            </div>
+            <div class="page text2num" id="text2num">
+                text2num
             </div>
         </div>
 
         <script>
-         var assiciation = {
+         var association = {
              '00': '望远镜',
              '01': '灵魂',
              '02': '铃儿',
              '03': '灵山',
              '04': '零食',
-             '05': '狼' // <- 哦呜~~~~',
+             '05': '狼', // <- 哦呜~~~~',
              '06': '樱桃',
              '07': '路灯',
              '08': '欧巴',
@@ -155,7 +194,7 @@
              '91': '球衣',
              '92': '饺子',
              '93': '救生圈',
-             '94': '',
+             '94': '耶稣', // <- 救世主
              '95': '酒壶',
              '96': '不倒翁',
              '97': '酒席',
@@ -164,8 +203,15 @@
              '100': '超市',
          }
 
-         document.onkeyup = updateContent;
-         document.onclick = updateContent;
+         var isRandom = false;
+         var random = document.getElementById('random');
+
+         random.onclick = function () {
+             console.log('onclick random');
+             isRandom = !isRandom;
+             setNum2TextPage(isRandom);
+             setText2NumPage(isRandom);
+         }
 
          // setInterval(updateContent, 10000);
 
@@ -184,7 +230,7 @@
 
              return {
                  num: index,
-                 text: assiciation[index],
+                 text: association[index],
              };
          }
 
@@ -197,6 +243,59 @@
              var textEl = document.getElementById('text-value');
              numEl.innerHTML = num;
              textEl.innerHTML = text;
+         }
+
+         function setNum2TextPage(isRandom) {
+             var num2textEl = document.getElementById('num2text');
+
+             num2textEl.innerHTML = '';
+
+             var keys = Object.keys(association);
+             if (isRandom) {
+                 shuffle(keys);
+             }
+             keys.forEach(function(key) {
+                 var content = [key, '是什么呢？ ', association[key]].join('');
+                 num2textEl.appendChild(elem('p', content));
+             });
+         }
+
+         function shuffle(arr) {
+             var tmp;
+             for (var i = 0; i < arr.length / 2; i++) {
+                 var selindex = randInt(0, arr.length);
+                 tmp = arr[i];
+                 arr[i] = arr[selindex];
+                 arr[selindex] = tmp;
+             }
+
+             return arr;
+         }
+
+         function randInt(lo, hi){
+             return parseInt(Math.random() * (hi - lo) + lo);
+         }
+
+         function elem(tag, innerhtml) {
+             var e = document.createElement(tag);
+             e.innerHTML = innerhtml;
+
+             return e;
+         }
+
+         function setText2NumPage(isRandom) {
+             var num2textEl = document.getElementById('text2num');
+
+             num2textEl.innerHTML = '';
+
+             var keys = Object.keys(association);
+             if (isRandom) {
+                 shuffle(keys);
+             }
+             keys.forEach(function(key) {
+                 var content = [association[key], '是什么呢？ ', key].join('');
+                 num2textEl.appendChild(elem('p', content));
+             });
          }
         </script>
     </body>
