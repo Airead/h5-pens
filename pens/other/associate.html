@@ -14,6 +14,7 @@
 
          p {
              text-align: center;
+             font-size: 1.5em;
          }
 
          .container {
@@ -71,12 +72,10 @@
          }
 
          .num2text {
-             width: 80%;
              background: rgba(244, 231, 214, 1);
          }
 
          .text2num {
-             width: 80%;
              background: rgba(202, 223, 242, 1);
          }
         </style>
@@ -84,6 +83,7 @@
     <body>
         <div class="action">
             <span id="random">random</span>
+            <span id="next">next</span>
         </div>
         <div class="container">
             <div class="page random">
@@ -165,15 +165,15 @@
              '58': '苦瓜',
              '59': '五角星',
              '60': '榴莲',
-             '61': '轮椅',
+             '61': '小破孩',
              '62': '驴儿',
-             '63': '硫酸',
+             '63': '流苏',
              '64': '螺丝',
              '65': '尿壶',
              '66': '溜溜球',
              '67': '流星',
              '68': '喇吧',
-             '69': '鹿角',
+             '69': '漏斗',
              '70': '麒麟',
              '71': '奇异果',
              '72': '企鹅',
@@ -188,9 +188,9 @@
              '81': '护士',
              '82': '白鹅',
              '83': '花生',
-             '84': '百事可乐',
+             '84': '84消毒液',
              '85': '宝物',
-             '86': '白鹭',
+             '86': '八路',
              '87': '白旗',
              '88': '白版',
              '89': '芭蕉',
@@ -208,13 +208,39 @@
          }
 
          var isRandom = false;
+         var pages = ['random', 'num2text', 'text2num'];
+         var pageIndex = 0;
          var random = document.getElementById('random');
+         var next = document.getElementById('next');
 
-         random.onclick = function () {
+         randomOnClickH();
+         showPage('random');
+
+         document.onclick = updateContent;
+         random.onclick = randomOnClickH;
+
+         function randomOnClickH() {
              console.log('onclick random');
              isRandom = !isRandom;
              setNum2TextPage(isRandom);
              setText2NumPage(isRandom);
+         }
+
+         next.onclick = function () {
+             pageIndex = (pageIndex + 1) % pages.length;
+             showPage(pages[pageIndex]);
+         }
+
+         function showPage(pageName) {
+             console.log('pageName', pageName);
+             pages.forEach(function (name) {
+                 console.log('name', name);
+                 var display = 'none';
+                 if (name === pageName) {
+                     display = 'block';
+                 }
+                 document.getElementsByClassName(name)[0].style.display = display;
+             });
          }
 
          // setInterval(updateContent, 10000);
