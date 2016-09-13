@@ -1,10 +1,89 @@
 <!doctype html>
 <html lang="en">
     <head>
-        <meta charset="UTF-8"/>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>image</title>
+        <style>
+         .box {
+             position: absolute;
+             top: 0;
+             bottom: 0;
+             left: 0;
+             right: 0;
+         }
+
+         .image {
+             position: absolute;
+             background: #fff;
+             top: 0;
+             left: 0;
+             bottom: 0;
+             right: 0;
+         }
+
+         .num {
+             position: absolute;
+             z-index: 100;
+             font-size: 12px;
+             top: 50%;
+             left: 0;
+             right: 0;
+             text-align: center;
+         }
+        </style>
     </head>
     <body>
-        
+
+        <div id="show-area">
+            
+        </div>
+        <script>
+         var showArea = document.getElementById('show-area');
+
+         document.onclick = function() {
+             var num = randInt(0, 100);
+             showAssociation(num, '');
+         };
+
+         function randInt(lo, hi){
+             return parseInt(Math.random() * (hi - lo) + lo);
+         }
+
+         function showAssociation(num, imageUrl) {
+             var div = document.createElement('div');
+             div.className = 'box';
+             var num = newNum(num);
+             var image = newImage(imageUrl);
+
+             div.appendChild(num);
+             div.appendChild(image);
+
+             showArea.innerHTML = '';
+             showArea.appendChild(div);
+
+         }
+
+         function newNum(num) {
+             var div = document.createElement('div');
+             div.innerHTML = num;
+             div.className = 'num';
+
+             return div;
+         }
+
+         function newImage(imageUrl) {
+             var div = document.createElement('div');
+             div.className = 'image';
+             div.style.background = '#fff';
+             setTimeout(function () {
+                 div.style.background = '#ddd';
+                 div.style.transition = 'all .6s';
+             });
+
+             return div;
+         }
+
+        </script>
     </body>
 </html>
