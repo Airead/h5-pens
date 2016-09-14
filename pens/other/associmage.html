@@ -11,6 +11,8 @@
              bottom: 0;
              left: 0;
              right: 0;
+             overflow: hidden;
+             background: #000;
          }
 
          .image {
@@ -31,12 +33,13 @@
          .num {
              position: absolute;
              z-index: 100;
-             font-size: 140px;
+             font-size: 540px;
              top: 50%;
              left: 0;
              right: 0;
-             margin-top: -70px;
+             margin-top: -270px;
              text-align: center;
+             color: #ddd;
          }
         </style>
     </head>
@@ -47,16 +50,30 @@
         <script>
          var showArea = document.getElementById('show-area');
          var timer = null;
+         var nextTimer = null;
+         var isRandom = false;
+         var startIndex = 75;
+         var endIndex = 99;
+         var curIndex = startIndex - 1;
 
-         document.onclick = function() {
-             var num = randInt(0, 100);
-             if (num < 10) {
-                 num = '0' + num;
+         document.onclick = nextAssociation;
+
+         function nextAssociation() {
+             curIndex += 1;
+             if (curIndex > endIndex) {
+                 curIndex = startIndex;
              }
-             var imageUrl = 'http://123.56.101.172/images/110numbers/' + num + '.png';
-             imageUrl = '/ignores/110numbers/' + num + '.png';
-             showAssociation(num, imageUrl);
-         };
+             if (isRandom) {
+                 var num = randInt(75, 100);
+                 if (num < 10) {
+                     num = '0' + num;
+                 }
+                 curIndex = num;
+             }
+             var imageUrl = 'http://123.56.101.172/images/110numbers/' + curIndex + '.png';
+             imageUrl = '/ignores/110numbers/' + curIndex + '.png';
+             showAssociation(curIndex, imageUrl);
+         }
 
          function randInt(lo, hi){
              return parseInt(Math.random() * (hi - lo) + lo);
@@ -74,6 +91,27 @@
              showArea.innerHTML = '';
              showArea.appendChild(div);
 
+             if (timer) {
+                 clearTimeout(timer);
+                 timer = null;
+             }
+
+             timer = setTimeout(function () {
+                 image.style.transition = 'all 2s';
+                 image.style.opacity = 1;
+
+                 num.style.transition = 'all 2s';
+                 num.style.opacity = .1;
+             }, 1000);
+
+             if (nextTimer) {
+                 clearTimeout(nextTimer);
+                 nextTimer = null;
+             }
+
+             nextTimeout = setTimeout(function () {
+                 nextAssociation();
+             }, 6000);
          }
 
          function newNum(num) {
@@ -90,16 +128,6 @@
              img.src = imageUrl;
 
              div.className = 'image';
-
-             if (timer) {
-                 clearTimeout(timer);
-                 timer = null;
-             }
-
-             timer = setTimeout(function () {
-                 div.style.transition = 'all .5s';
-                 div.style.opacity = 1;
-             }, 1000);
 
              div.appendChild(img);
              return div;
