@@ -15,11 +15,17 @@
 
          .image {
              position: absolute;
-             background: #fff;
+             background: #333;
+             opacity: 0;
              top: 0;
              left: 0;
              bottom: 0;
              right: 0;
+         }
+
+         .image img {
+             width: 100%;
+             height: 100%;
          }
 
          .num {
@@ -34,16 +40,19 @@
         </style>
     </head>
     <body>
-
         <div id="show-area">
-            
+
         </div>
         <script>
          var showArea = document.getElementById('show-area');
 
          document.onclick = function() {
              var num = randInt(0, 100);
-             showAssociation(num, '');
+             if (num < 10) {
+                 num = '0' + num;
+             }
+             var imageUrl = 'http://123.56.101.172/images/110numbers/' + num + '.png';
+             showAssociation(num, imageUrl);
          };
 
          function randInt(lo, hi){
@@ -74,13 +83,16 @@
 
          function newImage(imageUrl) {
              var div = document.createElement('div');
+             var img = document.createElement('img');
+             img.src = imageUrl;
+
              div.className = 'image';
-             div.style.background = '#fff';
              setTimeout(function () {
-                 div.style.background = '#ddd';
-                 div.style.transition = 'all .6s';
+                 div.style.transition = 'all .5s 1s';
+                 div.style.opacity = 1;
              });
 
+             div.appendChild(img);
              return div;
          }
 
