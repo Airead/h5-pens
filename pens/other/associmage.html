@@ -31,10 +31,11 @@
          .num {
              position: absolute;
              z-index: 100;
-             font-size: 12px;
+             font-size: 140px;
              top: 50%;
              left: 0;
              right: 0;
+             margin-top: -70px;
              text-align: center;
          }
         </style>
@@ -45,6 +46,7 @@
         </div>
         <script>
          var showArea = document.getElementById('show-area');
+         var timer = null;
 
          document.onclick = function() {
              var num = randInt(0, 100);
@@ -52,6 +54,7 @@
                  num = '0' + num;
              }
              var imageUrl = 'http://123.56.101.172/images/110numbers/' + num + '.png';
+             imageUrl = '/ignores/110numbers/' + num + '.png';
              showAssociation(num, imageUrl);
          };
 
@@ -87,10 +90,16 @@
              img.src = imageUrl;
 
              div.className = 'image';
-             setTimeout(function () {
-                 div.style.transition = 'all .5s 1s';
+
+             if (timer) {
+                 clearTimeout(timer);
+                 timer = null;
+             }
+
+             timer = setTimeout(function () {
+                 div.style.transition = 'all .5s';
                  div.style.opacity = 1;
-             });
+             }, 1000);
 
              div.appendChild(img);
              return div;
