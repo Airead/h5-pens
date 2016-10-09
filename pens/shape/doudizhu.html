@@ -1,0 +1,221 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Document</title>
+        <style>
+         * {
+             margin: 0;
+             padding: 0;
+         }
+
+         .line {
+             margin: 0;
+             position: absolute;
+             height: 100px;
+             width: 100%;
+         }
+
+         .l1 {
+             top: 0px;
+             left: 60px;
+         }
+
+         .l2 {
+             top: 100px;
+         }
+
+         .l2 div:nth-child(2) {
+             left: 120px;
+         }
+
+         .l3 {
+             display: none;
+             top: 240px;
+         }
+
+         .zero .one, .two, .three, .four {
+             position: absolute;
+             width: 100px;
+             height: 100px;
+             background: #ddd;
+         }
+
+         #pw, #p2, #p1, #pk {
+             position: absolute;
+             width: 100px;
+             height: 100px;
+             background: #ddd;
+         }
+
+         .circle {
+             position: absolute;
+             border-radius: 50%;
+             background: #ddd;
+         }
+
+         .zero .circle {
+             opacity: 0;
+         }
+
+         .one .circle:nth-child(1) {
+             width: 70px;
+             height: 70px;
+             border-radius: 50%;
+             position: relative;
+             top: 15px;
+             left: 15px;
+         }
+
+         .two .circle {
+             width: 30px;
+             height: 30px;
+             display: none;
+         }
+
+         .two .circle:nth-child(1) {
+             display: block;
+             top: 15px;
+             left: 35px;
+         }
+
+         .two .circle:nth-child(2) {
+             display: block;
+             top: 55px;
+             left: 35px;
+         }
+
+         .three .circle {
+             width: 30px;
+             height: 30px;
+             display: none;
+         }
+
+         .three .circle:nth-child(1) {
+             display: block;
+             top: 15px;
+             left: 35px;
+         }
+
+         .three .circle:nth-child(2) {
+             display: block;
+             top: 55px;
+             left: 15px;
+         }
+
+         .three .circle:nth-child(3) {
+             display: block;
+             top: 55px;
+             left: 55px;
+         }
+
+         .four .circle {
+             width: 30px;
+             height: 30px;
+         }
+
+         .four .circle:nth-child(1) {
+             top: 15px;
+             left: 15px;
+         }
+
+         .four .circle:nth-child(2) {
+             top: 15px;
+             left: 55px;
+         }
+
+         .four .circle:nth-child(3) {
+             top: 55px;
+             left: 15px;
+         }
+
+         .four .circle:nth-child(4) {
+             top: 55px;
+             left: 55px;
+         }
+
+         #pw .circle {
+             background: rgba(246, 18, 242, 1);
+         }
+
+         #p2 .circle {
+             background: rgba(255, 57, 0, 1);
+         }
+
+         #p1 .circle {
+             background: rgba(40, 24, 177, 1);
+         }
+
+         #pk .circle {
+             background: rgba(19, 207, 49, 1);
+         }
+        </style>
+    </head>
+    <body>
+        <div class="line l1">
+            <div id="pw" class="one">
+                <div class="circle"></div>
+                <div class="circle"></div>
+                <div class="circle"></div>
+                <div class="circle"></div>
+            </div>
+        </div>
+        <div class="line l2">
+            <div id="p2" class="two">
+                <div class="circle"></div>
+                <div class="circle"></div>
+                <div class="circle"></div>
+                <div class="circle"></div>
+            </div>
+            <div id="p1" class="three">
+                <div class="circle"></div>
+                <div class="circle"></div>
+                <div class="circle"></div>
+                <div class="circle"></div>
+            </div>
+        </div>
+        <div class="line l3">
+            <div id="pk" class="four">
+                <div class="circle"></div>
+                <div class="circle"></div>
+                <div class="circle"></div>
+                <div class="circle"></div>
+            </div>
+        </div>
+
+        <script>
+         var classes = {
+             0: 'zero',
+             1: 'one',
+             2: 'two',
+             3: 'three',
+             4: 'four',
+         };
+
+         var $pw = document.getElementById('pw');
+         var $p2 = document.getElementById('p2');
+         var $p1 = document.getElementById('p1');
+
+         change();
+
+         function change() {
+             var pw = randInt(0, 3);
+             var p2 = randInt(0, 5);
+             var p1 = randInt(0, 5);
+
+             console.log(pw, p2, p1);
+
+             $pw.className = classes[pw];
+             $p2.className = classes[p2];
+             $p1.className = classes[p1];
+         }
+
+         document.onclick = change;
+
+         function randInt(lo, hi) {
+             return parseInt(Math.random() * (hi - lo) + lo);
+         }
+        </script>
+    </body>
+</html>
