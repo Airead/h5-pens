@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Document</title>
+
+        <style>
+
+         .line {
+             margin-bottom: 20px;
+         }
+
+         .line:after {
+             content: "";
+             display: block;
+             clear: both;
+         }
+
+         .card {
+             width: 12px;
+             float: left;
+             font-size: 14px;
+             text-align: center;
+             font-family: Helvetica;
+         }
+
+         .card.narrow {
+             position: relative;
+             font-size: 12px;
+             top: 1px;
+             left: -1px;
+         }
+
+         .hei, .mei, .small {
+             color: black;
+         }
+
+         .hong, .fang, .big {
+             color: red;
+         }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <div id="di" class="line"></div>
+            <div id="p1" class="line"></div>
+            <div id="p2" class="line"></div>
+            <div id="p3" class="line"></div>
+        </div>
+
+        <script>
+         var nums = ['3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A', '2'];
+         var numValues = ['3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A', '2', '$'];
+         var cates = ['fang', 'mei', 'hong', 'hei'];
+         var cards = genCards();
+
+         nextRound(cards);
+
+         document.onclick = function () {
+             nextRound(cards);
+         }
+
+         function genCards(){
+             var cards = ['big-$', 'small-$'];
+
+             for (var i = 0; i < cates.length; i++) {
+                 for (var j = 0; j < nums.length; j++) {
+                     var card = [cates[i], nums[j]].join('-');
+                     cards.push(card);
+                 }
+             }
+
+             return cards;
+         }
+
+         function nextRound(cards) {
+             clearRound();
+
+             var rndCards = xipai(cards);
+
+             addCardsToPlayer(sortCards(rndCards.di), 'di');
+             addCardsToPlayer(sortCards(rndCards.p1), 'p1');
+             addCardsToPlayer(sortCards(rndCards.p2), 'p2');
+             addCardsToPlayer(sortCards(rndCards.p3), 'p3');
+         }
+
+         function clearRound() {
+             var pids = ['di', 'p1', 'p2', 'p3'];
+
+             for (var i = 0; i < pids.length; i++) {
+                 var div = document.getElementById(pids[i]);
+                 div.innerHTML = '';
+             }
+         }
+
+         function xipai(cards) {
+             var rndList = cards.slice(0);
+             shuffle(rndList);
+             var rndCards = {
+                 di: rndList.slice(51, 54),
+                 p1: rndList.slice(0, 17),
+                 p2: rndList.slice(17, 34),
+                 p3: rndList.slice(34, 51),
+             };
+
+             return rndCards;
+         }
+
+         function sortCards(cards) {
+             cards.sort(function(a, b) {
+                 return getCardInfo(b).value - getCardInfo(a).value;
+             });
+
+             return cards;
+         }
+
+         function shuffle(a) {
+             var j, x, i;
+             for (i = a.length; i; i -= 1) {
+                 j = Math.floor(Math.random() * i);
+                 x = a[i - 1];
+                 a[i - 1] = a[j];
+                 a[j] = x;
+             }
+         }
+
+         function addCardsToPlayer(cards, playerId) {
+             for (var i = 0; i < cards.length; i++) {
+                 addCardToPlayer(cards[i], playerId);
+             }
+         };
+
+         function addCardToPlayer(card, playerId) {
+             var p = document.getElementById(playerId);
+             var $card = renderCard(card);
+             p.appendChild($card);
+         }
+
+         function renderCard(card) {
+             var $c = document.createElement('div');
+
+             var cardInfo = getCardInfo(card);
+
+             var classes = customCardClasses(cardInfo);
+
+             $c.className = classes.join(' ');
+             $c.innerHTML = cardInfo.num;
+
+             return $c;
+         }
+
+         function getCardInfo(card) {
+             var tmps = card.split('-');
+             var cate = tmps[0];
+             var num = tmps[1];
+             var compareValue = numValues.indexOf(num) + cates.indexOf(cate) / 10;
+
+             var cardInfo = {
+                 cate: cate,
+                 num: num,
+                 value: compareValue,
+             };
+
+             // console.log(cardInfo);
+             return cardInfo;
+         }
+
+         function customCardClasses(cardInfo) {
+             var classes = ['card', cardInfo.cate];
+             if (cardInfo.num === '10') {
+                 classes.push('narrow');
+             }
+             return classes;
+         }
+
+        </script>
+    </body>
+</html>
