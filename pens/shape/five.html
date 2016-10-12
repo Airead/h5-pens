@@ -15,8 +15,18 @@
              padding: 0;
          }
 
+         .container {
+         }
+
+         .box {
+             padding: 10px;
+             width: 90px;
+             background: #ddd;
+             margin: 40px auto;
+         }
+
          .line {
-             width: 100%;
+             height: 30px;
          }
 
          .line:after {
@@ -36,20 +46,22 @@
     </head>
     <body>
         <div class="container">
-            <div class="line">
-                <div id="c1" class="circle"></div>
-                <div id="c2" class="circle"></div>
-                <div id="c3" class="circle"></div>
-            </div>
-            <div class="line">
-                <div id="c4" class="circle"></div>
-                <div id="c5" class="circle"></div>
-                <div id="c6" class="circle"></div>
-            </div>
-            <div class="line">
-                <div id="c7" class="circle"></div>
-                <div id="c8" class="circle"></div>
-                <div id="c9" class="circle"></div>
+            <div class="box">
+                <div class="line">
+                    <div id="c1" class="circle"></div>
+                    <div id="c2" class="circle"></div>
+                    <div id="c3" class="circle"></div>
+                </div>
+                <div class="line">
+                    <div id="c4" class="circle"></div>
+                    <div id="c5" class="circle"></div>
+                    <div id="c6" class="circle"></div>
+                </div>
+                <div class="line">
+                    <div id="c7" class="circle"></div>
+                    <div id="c8" class="circle"></div>
+                    <div id="c9" class="circle"></div>
+                </div>
             </div>
         </div>
 
@@ -69,14 +81,15 @@
              $cs.push($c);
          }
 
+         var nums = [1,2,3,4,5,4,3,2];
          var curNum = 0;
 
          update(curNum);
 
          document.onclick = function () {
-             curNum = (curNum + 1) % 6;
+             curNum = (curNum + 1) % nums.length;
 
-             update(curNum);
+             update(nums[curNum]);
          };
 
          function update(n) {
@@ -87,6 +100,7 @@
 
              console.log('current num', num);
 
+             console.log('num', num);
              var def = defs[num];
 
              for (var i = 0; i < def.length; i++) {
