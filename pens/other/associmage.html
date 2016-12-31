@@ -33,11 +33,11 @@
          .num {
              position: absolute;
              z-index: 100;
-             font-size: 540px;
+             font-size: 340px;
              top: 50%;
              left: 0;
              right: 0;
-             margin-top: -270px;
+             margin-top: -170px;
              text-align: center;
              color: #ddd;
          }
@@ -52,7 +52,9 @@
          var timer = null;
          var nextTimer = null;
          var isRandom = false;
-         var startIndex = 75;
+         var fadeMs = 1000;
+         var nextMs = 2500;
+         var startIndex = 0;
          var endIndex = 99;
          var curIndex = startIndex - 1;
 
@@ -65,14 +67,17 @@
              }
              if (isRandom) {
                  var num = randInt(75, 100);
-                 if (num < 10) {
-                     num = '0' + num;
-                 }
                  curIndex = num;
              }
-             var imageUrl = 'http://123.56.101.172/images/110numbers/' + curIndex + '.png';
-             imageUrl = '/ignores/110numbers/' + curIndex + '.png';
-             showAssociation(curIndex, imageUrl);
+
+             var key = curIndex;
+             if (key < 10) {
+                 key = '0' + key;
+             }
+
+             var imageUrl = 'http://123.56.101.172/images/110numbers/' + key + '.png';
+             imageUrl = '/ignores/110numbers/' + key + '.png';
+             showAssociation(key, imageUrl);
          }
 
          function randInt(lo, hi){
@@ -97,12 +102,12 @@
              }
 
              timer = setTimeout(function () {
-                 image.style.transition = 'all 2s';
+                 image.style.transition = 'all ' + fadeMs / 1000 +  's';
                  image.style.opacity = 1;
 
-                 num.style.transition = 'all 2s';
-                 num.style.opacity = .1;
-             }, 1000);
+                 num.style.transition = 'all ' + fadeMs / 1000 + 's';
+                 num.style.opacity = .3;
+             }, fadeMs);
 
              if (nextTimer) {
                  clearTimeout(nextTimer);
@@ -111,7 +116,7 @@
 
              nextTimeout = setTimeout(function () {
                  nextAssociation();
-             }, 6000);
+             }, nextMs);
          }
 
          function newNum(num) {
