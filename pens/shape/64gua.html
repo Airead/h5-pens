@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>64卦</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            margin-left: -25px;
+            margin-top: -39px;
+        }
+
+        .yao {
+            height: 7px;
+            width: 49px;
+            background: black;
+            margin-bottom: 7px;
+        }
+
+        .yao.yin {
+            width: 20px;
+        }
+
+        .yao.yin:after {
+            content: "";
+            display: block;
+            width: 20px;
+            height: 7px;
+            background: black;
+            position: relative;
+            left: 29px;
+        }
+    </style>
+</head>
+<body>
+    <div class="center">
+        <div class="yao"></div>
+        <div class="yao"></div>
+        <div class="yao"></div>
+        <div class="yao"></div>
+        <div class="yao"></div>
+        <div class="yao"></div>
+    </div>
+
+    <script>
+        var yaos = document.getElementsByClassName('yao');
+
+        document.onclick = change;
+
+        function change() {
+            console.log('change');
+            for (var i = 0; i < yaos.length; i++) {
+                yaos[i].className = getRandomClass();
+            }
+        }
+
+        function getRandomClass() {
+            var cls = 'yao ';
+            var rnd = Math.random();
+            if (rnd < 0.5) {
+                cls += 'yin';
+            }
+
+            return cls;
+        }
+    </script>
+</body>
+</html>
