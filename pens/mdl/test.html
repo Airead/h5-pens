@@ -9,28 +9,38 @@
     <link rel="stylesheet" href="/lib/mdl/material-icons.css">
     <script src="/lib/mdl/material.min.js"></script>
     <style>
-        html,
-        body {
-            display: flex;
-            height: 100%;
-            flex-direction: row;
-            justify-content: space-around;
-            align-items: center;
-            /*background: #888;*/
-        }
 
-        .demo {
-            width: 300px;
-            height: 300px;
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-        }
     </style>
 </head>
 
 <body>
-
+    <div class="mdl-layout mdl-js-layout">
+        <header class="mdl-layout__header">
+            <div class="mdl-layout-icon"></div>
+            <div class="mdl-layout__header-row">
+                <span class="mdl-layout__title">Simple Layout</span>
+                <div class="mdl-layout-spacer"></div>
+                <nav class="mdl-navigation">
+                    <a href="#" class="mdl-navigation__link">Nav link 1</a>
+                    <a href="#" class="mdl-navigation__link">Nav link 2</a>
+                    <a href="#" class="mdl-navigation__link">Nav link 3</a>
+                </nav>
+            </div>
+        </header>
+        <div class="mdl-layout__drawer">
+            <span class="mdl-layout__title">Simple Layout</span>
+            <nav class="mdl-navigation">
+                <a href="#" class="mdl-navigation__link">Nav link 1</a>
+                <a href="#" class="mdl-navigation__link">Nav link 2</a>
+                <a href="#" class="mdl-navigation__link">Nav link 3</a>
+            </nav>
+        </div>
+        <main class="mdl-layout__content">
+            <p>Content</p>
+            <p>Goes</p>
+            <p>Here</p>
+        </main>
+    </div>
 </body>
 
 </html>
