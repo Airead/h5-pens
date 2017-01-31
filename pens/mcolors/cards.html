@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>color cards</title>
+    <link rel="stylesheet" href="/lib/mdl/material.min.css">
+    <!--<link rel="stylesheet" href="/lib/mdl/material-icons.css">-->
+    <!--<script src="/lib/mdl/material.min.js"></script>-->
+    <script src="mcolors.js"></script>
+    <style>
+        .color-card--title {
+            position: relative;
+            padding: 16px;
+            height: 138px;
+            display: flex;
+        }
+        
+        .color-card--title-text,
+        .color-card--title-type, 
+        .color-card--title-rgb {
+            margin: 0;
+            padding: 0;
+            font-size: 24px;
+        }
+
+        .color-card--title-type {
+            position: absolute;
+            left: 16px;
+            bottom: 16px;
+        }
+
+        .color-card--title-rgb {
+            position: absolute;
+            right: 16px;
+            bottom: 16px;
+        }
+
+        .color-card--primary {
+            margin-top: 4px;
+        }
+
+        .color-card--line {
+            display: flex;
+            height: 46px;
+            /*border: 1px solid;*/
+            align-items: center;
+            padding: 0 16px;
+            justify-content: space-between;
+        }
+
+        .color-card--accent {
+            margin-top: 4px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="mdl-grid" id="cards">
+        <!--<div class="mdl-cell mdl-cell--6-col">
+            <div class="color-card">
+                <div class="color-card--title" style="background: #f44336;">
+                    <h1 class="color-card--title-text">red</h1>
+                    <span class="color-card--title-type">500</span>
+                    <span class="color-card--title-rgb">#f44336</span>
+                </div>
+                <div class="color-card--primary">
+                    <div class="color-card--line" style="background: #FFEBEE">
+                        <span class="color-card--line-type">50</span>
+                        <span class="color-card--line-rgb">#FFEBEE</span>
+                    </div>
+                    <div class="color-card--line" style="background: #FFEBEE">
+                        <span class="color-card--line-type">50</span>
+                        <span class="color-card--line-rgb">#FFEBEE</span>
+                    </div>
+                    <div class="color-card--line" style="background: #FFEBEE">
+                        <span class="color-card--line-type">50</span>
+                        <span class="color-card--line-rgb">#FFEBEE</span>
+                    </div>
+                    <div class="color-card--line" style="background: #FFEBEE">
+                        <span class="color-card--line-type">50</span>
+                        <span class="color-card--line-rgb">#FFEBEE</span>
+                    </div>
+                    <div class="color-card--line" style="background: #FFEBEE">
+                        <span class="color-card--line-type">50</span>
+                        <span class="color-card--line-rgb">#FFEBEE</span>
+                    </div>
+                    <div class="color-card--line" style="background: #FFEBEE">
+                        <span class="color-card--line-type">50</span>
+                        <span class="color-card--line-rgb">#FFEBEE</span>
+                    </div>
+                    <div class="color-card--line" style="background: #FFEBEE">
+                        <span class="color-card--line-type">50</span>
+                        <span class="color-card--line-rgb">#FFEBEE</span>
+                    </div>
+                    <div class="color-card--line" style="background: #FFEBEE">
+                        <span class="color-card--line-type">50</span>
+                        <span class="color-card--line-rgb">#FFEBEE</span>
+                    </div>
+                    <div class="color-card--line" style="background: #FFEBEE">
+                        <span class="color-card--line-type">50</span>
+                        <span class="color-card--line-rgb">#FFEBEE</span>
+                    </div>
+                    <div class="color-card--line" style="background: #FFEBEE">
+                        <span class="color-card--line-type">50</span>
+                        <span class="color-card--line-rgb">#FFEBEE</span>
+                    </div>
+                </div>
+                <div class="color-card--accent">
+                    <div class="color-card--line" style="background: #FFEBEE">
+                        <span class="color-card--line-type">50</span>
+                        <span class="color-card--line-rgb">#FFEBEE</span>
+                    </div>
+                    <div class="color-card--line" style="background: #FFEBEE">
+                        <span class="color-card--line-type">50</span>
+                        <span class="color-card--line-rgb">#FFEBEE</span>
+                    </div>
+                    <div class="color-card--line" style="background: #FFEBEE">
+                        <span class="color-card--line-type">50</span>
+                        <span class="color-card--line-rgb">#FFEBEE</span>
+                    </div>
+                    <div class="color-card--line" style="background: #FFEBEE">
+                        <span class="color-card--line-type">50</span>
+                        <span class="color-card--line-rgb">#FFEBEE</span>
+                    </div>
+                </div>
+            </div>
+        </div>-->
+    </div>
+    <script src="createCards.js"></script>
+</body>
+
+</html>
