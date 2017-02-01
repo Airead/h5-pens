@@ -90,14 +90,20 @@
  function createCardLine(type, rgb) {
      var container = createNode('div', 'color-card--line');
      var typeSpan = createNode('span', 'color-card--line-type');
+     var hsvSpan = createNode('span', 'color-card--line-hsv');
      var rgbSpan = createNode('span', 'color-card--line-rgb');
+
+     var tinyC = tinycolor(rgb).toHsv();
+     var hsv = [tinyC.h.toFixed(0), (tinyC.s * 100).toFixed(0), (tinyC.v * 100).toFixed(0)].join(',');
 
      console.log('create line');
      typeSpan.innerHTML = type;
      rgbSpan.innerHTML = rgb;
+     hsvSpan.innerHTML = hsv;
      container.style.background = rgb;
 
      container.appendChild(typeSpan);
+     container.appendChild(hsvSpan);
      container.appendChild(rgbSpan);
 
      return container;

@@ -335,6 +335,7 @@ var colorDefs = {
     indigo: indigoList,
     deepPurple: deepPurpleList,
     purple: purpleList,
+    pink: pinkList,
     brown: brownList,
     gray: grayList,
     blueGray: blueGrayList,
