@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title>test d3</title>
-    <script src="../../js/d3/d3.js" charset="utf-8"></script>
+    <script src="../../lib/d3/d3.js" charset="utf-8"></script>
 
     <style>
         .node {
@@ -67,7 +67,7 @@
             duration = 750,
             root;
 
-        var tree = d3.layout.tree()
+        var tree = d3.tree()
             .size([height, width]);
 
         tree.separation(function(a, b) {
