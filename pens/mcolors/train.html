@@ -20,15 +20,34 @@
             align-items: flex-end;
         }
 
+        #colors {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            z-index: -1;
+        }
+
         #answer {
             font-size: 36px;
             margin-bottom: 50px;
+        }
+
+        .button {
+            position: absolute;
+            right: 10px;
+            bottom: 10px;
         }
     </style>
 </head>
 <body>
     <div id="main">
+        <div class="button">
+            <button id="circleAction">colors</button>
+        </div>
         <div id="answer">answer</div>
+        <div id="colors">
+            <img src="./c.svg" alt="">
+        </div>
     </div>
 
     <script src="train.js"></script>

@@ -18,6 +18,9 @@ var trainColors = collectAllColors(['500']);
 
 var mainContent = document.getElementById('main');
 var answerContent = document.getElementById('answer');
+var colorsContent = document.getElementById('colors');
+var isColorsContentDisplay = true;
+var circleActionBtn = document.getElementById('circleAction');
 
 document.onclick = next;
 
@@ -29,6 +32,19 @@ function main() {
     if (query.level && trainLevels[query.level]) {
         level = query.level;
     }
+
+    circleActionBtn.onclick = function(event) {
+        event.stopPropagation();
+        event.preventDefault();
+
+        if (isColorsContentDisplay) {
+            isColorsContentDisplay = false;
+            colorsContent.style.display = 'none';
+        } else {
+            isColorsContentDisplay = true;
+            colorsContent.style.display = 'block';
+        }
+    };
 
     startTrain(level);
 }
