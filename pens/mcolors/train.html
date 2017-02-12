@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -10,46 +11,110 @@
             width: 100%;
             height: 100%;
         }
-
+        
         body {
             min-height: 100%;
             margin: 0;
             padding: 0;
             display: flex;
+            flex-direction: row;
             justify-content: center;
-            align-items: flex-end;
+            align-items: center;
         }
-
+        
         #colors {
+            display: none;
             position: absolute;
             top: 10px;
             left: 10px;
             z-index: -1;
         }
-
+        
         #answer {
+            position: absolute;
             font-size: 36px;
-            margin-bottom: 50px;
+            left: 0;
+            bottom: 50px;
+            width: 100%;
+            text-align: center;
         }
-
+        
         .button {
             position: absolute;
             right: 10px;
             bottom: 10px;
         }
+        
+        .color-block {
+            width: 150px;
+            height: 150px;
+            background: white;
+            margin: 10px 10px 0 0;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+        
+        #near {
+            position: absolute;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            top: 10px;
+            left: 10px;
+        }
+        
+        #near .center {
+            position: absolute;
+            top: 80px;
+            left: 80px;
+        }
+        
+        #near .rt span {
+            display: block;
+            text-align: right;
+        }
+        
+        #near .lb span {
+            display: block;
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+        }
+
+        #near .rb span {
+            display: block;
+            position: absolute;
+            bottom: 10px;
+            right: 20px;
+        }
     </style>
 </head>
+
 <body>
     <div id="main">
         <div class="button">
             <button id="circleAction">colors</button>
+            <button id="nearAction">near</button>
         </div>
         <div id="answer">answer</div>
         <div id="colors">
             <img src="./c.svg" alt="">
         </div>
+        <div id="near">
+            <div class="one">
+                <div class="color-block lt"></div>
+                <div class="color-block lb"></div>
+            </div>
+            <div class="two">
+                <div class="color-block rt"></div>
+                <div class="color-block rb"></div>
+            </div>
+            <div class="center">
+                <div class="color-block cc"></div>
+            </div>
+        </div>
     </div>
-
     <script src="train.js"></script>
 </body>
+
 </html>

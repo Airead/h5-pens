@@ -19,8 +19,14 @@ var trainColors = collectAllColors(['500']);
 var mainContent = document.getElementById('main');
 var answerContent = document.getElementById('answer');
 var colorsContent = document.getElementById('colors');
-var isColorsContentDisplay = true;
+var isColorsContentDisplay = false;
 var circleActionBtn = document.getElementById('circleAction');
+
+var nearColorsContent = document.getElementById('near');
+var isNearColorsDisplay = false;
+var nearActionBtn = document.getElementById('nearAction');
+
+var colorBlocks = document.getElementsByClassName('color-block');
 
 document.onclick = next;
 
@@ -33,7 +39,7 @@ function main() {
         level = query.level;
     }
 
-    circleActionBtn.onclick = function(event) {
+    circleActionBtn.onclick = function (event) {
         event.stopPropagation();
         event.preventDefault();
 
@@ -43,6 +49,21 @@ function main() {
         } else {
             isColorsContentDisplay = true;
             colorsContent.style.display = 'block';
+        }
+    };
+
+    nearActionBtn.onclick = function (event) {
+        event.stopPropagation();
+        event.preventDefault();
+
+        if (isNearColorsDisplay) {
+            isNearColorsDisplay = false;
+            nearColorsContent.style.display = 'none';
+        } else {
+            isNearColorsDisplay = true;
+            var nearColors = getNearColors(gameState.rgb);
+            setNearColors(gameState.rgb, nearColors);
+            nearColorsContent.style.display = 'flex';
         }
     };
 
@@ -65,6 +86,49 @@ function getQuery(search) {
     }
 
     return query;
+}
+
+function getNearColors(rgb) {
+    var nearArr = [];
+    Object.keys(trainColors).forEach(function (cname) {
+        if (rgb.toUpperCase() === trainColors[cname]) {
+            return;
+        }
+        nearArr.push({
+            name: cname,
+            distance: getDistanceBetweenRgb(rgb, trainColors[cname]),
+            rgb: trainColors[cname],
+        });
+    });
+
+    nearArr.sort(function (a, b) {
+        return a.distance - b.distance;
+    });
+
+    return nearArr;
+}
+
+function getDistanceBetweenRgb(rgb1, rgb2) {
+    var o1 = splitRgb(rgb1);
+    var o2 = splitRgb(rgb2);
+
+    return Math.pow((o1.r - o2.r), 2) + Math.pow((o1.g - o2.g), 2) + Math.pow((o1.b - o2.b), 2);
+}
+
+function splitRgb(rgb) {
+    return {
+        r: parseInt(rgb.slice(1, 3), 16),
+        g: parseInt(rgb.slice(3, 5), 16),
+        b: parseInt(rgb.slice(5, 7), 16),
+    };
+}
+
+function setNearColors(rgb, nearColors) {
+    for (var i = 0; i < 4; i++) {
+        colorBlocks[i].style.background = nearColors[i].rgb;
+        colorBlocks[i].innerHTML = '<span>' + nearColors[i].name + '</span>';
+    }
+    colorBlocks[4].style.background = rgb;
 }
 
 function startTrain(level) {
@@ -110,6 +174,10 @@ function extend(target, from) {
 
 function next() {
     console.log('next', gameState);
+
+    isNearColorsDisplay = false;
+    nearColorsContent.style.display = 'none';
+
     switch (gameState.state) {
         case 'color':
             gameState.state = 'answer';
