@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>test panio</title>
+</head>
+
+<body>
+    <h1 id="time"></h1>
+    <script>
+        var time = document.getElementById('time');
+        var AudioContext = window.AudioContext || window.webkitAudioContext || window.mozAudioContext || window.oAudioContext;
+        var context;
+
+        main();
+
+        function main() {
+            if (!AudioContext) return console.error("AudioContext not supported");
+            if (!OscillatorNode.prototype.start) OscillatorNode.prototype.start = OscillatorNode.prototype.noteOn;
+            if (!OscillatorNode.prototype.stop) OscillatorNode.prototype.stop = OscillatorNode.prototype.noteOff;
+
+            context = new AudioContext;
+        }
+
+
+        function play(freq, sec) {
+            var now = context.currentTime,
+                oscillator = context.createOscillator(),
+                gain = context.createGain();
+            oscillator.type = "square";
+            oscillator.frequency.value = freq;
+            gain.gain.linearRampToValueAtTime(0.0, now + 0.0);
+            gain.gain.linearRampToValueAtTime(0.6, now + sec / 10);
+            gain.gain.linearRampToValueAtTime(0.0, now + sec / 10 * 6);
+            oscillator.connect(gain);
+            gain.connect(context.destination);
+            oscillator.start(0);
+            setTimeout(function () {
+                oscillator.stop();
+            }, sec * 1000);
+        }
+
+        setInterval(function() {
+            time.innerHTML = new Date().toLocaleString();
+            play(2400, 0.1);
+        }, 1000)
+    </script>
+</body>
+
+</html>
