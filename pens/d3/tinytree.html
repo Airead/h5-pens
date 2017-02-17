@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset=utf-8 />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="../../lib/d3/d3.js"></script>
+    <title>test d3</title>
+    <style>
+        html,
+        body {
+            height: 100%;
+        }
+
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        svg {
+            border: 1px solid black;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="svg-canvas"></div>
+    <script>
+        function createCanvas(width, height, margin) {
+            var svg = d3.select('#svg-canvas').append('svg');
+            svg.attr('width', width + 2 * margin + 'px')
+                .attr('height', height + 2 * margin + 'px')
+
+            var g = svg.append('g')
+                .attr('transform', 'translate(' + margin + ',' + margin + ')')
+
+            return {
+                svg: svg,
+                g: g
+            }
+        }
+
+        function getRangeFromArr(arr) {
+            return [d3.min(arr), d3.max(arr)];
+        }
+    </script>
+    <script>
+        var width = 440;
+        var height = 440;
+        var canvas = createCanvas(width, height, 30);
+
+        var data = {
+            v: 1,
+            children: [{
+                v: 2,
+            }, {
+                v: 3,
+                children: [{
+                    v: 4
+                }, {
+                    v: 5
+                }, {
+                    v: 6
+                }]
+            }]
+        }
+
+        var root = d3.hierarchy(data);
+        var tree = d3.tree().size([width, height]);
+
+        var treeData = tree(root);
+
+        var line = d3.line()
+            .curve(d3.curveCardinal)
+
+        update(4,2)
+
+        function update(dx, dy) {
+            var node = canvas.g.selectAll('.node')
+            var link = canvas.g.selectAll('.link')
+            var text = canvas.g.selectAll('.text')
+            var mnode = canvas.g.selectAll('.mnode')
+
+            link.data(treeData.links())
+                .enter().append('path').merge(link)
+                .attr('class', 'link')
+                .attr('stroke', 'black')
+                .attr('fill', 'none')
+                .attr('d', d => {
+                    return line([
+                        [d.source.x, d.source.y],
+                        [d.target.x - (d.target.x - d.source.x) / dx, d.target.y - ( d.target.y - d.source.y) / dy],
+                        [d.target.x, d.target.y]
+                    ])
+                })
+
+            mnode.data(treeData.links())
+                .enter().append('circle').merge(mnode)
+                .attr('class', 'mnode')
+                .attr('cx', d => d.target.x - (d.target.x - d.source.x) / dx)
+                .attr('cy', d => d.target.y - ( d.target.y - d.source.y) / dy)
+                .attr('fill', 'blue')
+                .attr('r', 2)
+
+            node.data(treeData.descendants())
+                .enter().append('circle').merge(node)
+                .attr('class', 'node')
+                .attr('cx', d => d.x)
+                .attr('cy', d => d.y)
+                .attr('r', 6)
+
+            text.data(treeData.descendants())
+                .enter().append('text').merge(text)
+                .attr('class', 'text')
+                .attr('fill', 'red')
+                .attr('dx', '-.5em')
+                .attr('dy', '-.5em')
+                .attr('x', d => d.x)
+                .attr('y', d => d.y)
+                .text(d => d.data.v)
+        }
+    </script>
+</body>
+
+</html>

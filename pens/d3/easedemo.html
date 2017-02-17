@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset=utf-8 />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="../../lib/d3/d3.js"></script>
+    <title>test d3</title>
+    <style>
+        html,
+        body {
+            height: 100%;
+        }
+
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        svg {
+            /*border: 1px solid black;*/
+        }
+    </style>
+    </style>
+</head>
+
+<body>
+    <div>
+        <select id="ease-type">
+            <option selected value="linear">linear</option>
+            <option value="quadIn">quadIn</option>
+            <option value="quadOut">quadOut</option>
+            <option value="quadInOut">quadInOut</option>
+            <option value="cubicIn">cubicIn</option>
+            <option value="cubicOut">cubicOut</option>
+            <option value="cubicInOut">cubicInOut</option>
+            <option value="polyIn">polyIn</option>
+            <option value="polyOut">polyOut</option>
+            <option value="polyInOut">polyInOut</option>
+            <option value="sinIn">sinIn</option>
+            <option value="sinOut">sinOut</option>
+            <option value="sinInOut">sinInOut</option>
+            <option value="expIn">expIn</option>
+            <option value="expOut">expOut</option>
+            <option value="expInOut">expInOut</option>
+            <option value="circleIn">circleIn</option>
+            <option value="circleOut">circleOut</option>
+            <option value="circleInOut">circleInOut</option>
+            <option value="bounceIn">bounceIn</option>
+            <option value="bounceOut">bounceOut</option>
+            <option value="bounceInOut">bounceInOut</option>
+            <option value="backIn">backIn</option>
+            <option value="backOut">backOut</option>
+            <option value="backInOut">backInOut</option>
+            <option value="elasticIn">elasticIn</option>
+            <option value="elasticOut">elasticOut</option>
+            <option value="elasticInOut">elasticInOut</option>
+        </select>
+    </div>
+    <div id="svg-canvas"></div>
+    <script>
+        function createCanvas(width, height, margin) {
+            var svg = d3.select('#svg-canvas').append('svg');
+            svg.attr('width', width + 2 * margin + 'px')
+                .attr('height', height + 2 * margin + 'px')
+
+            var g = svg.append('g')
+                .attr('width', width)
+                .attr('height', height)
+                .attr('transform', 'translate(' + margin + ',' + margin + ')')
+
+            return g
+        }
+
+        function getRangeFromArr(arr) {
+            return [d3.min(arr), d3.max(arr)];
+        }
+    </script>
+    <script>
+        var width = 440;
+        var height = 440;
+        var canvas = createCanvas(width, height, 30);
+
+        var fill = '#e7e7e7'
+
+        var ease;
+        var x = d3.scaleLinear().range([0, width])
+        var y = d3.scaleLinear().range([height, 0]);
+        var path = d3.line()
+            .x(t => x(t))
+            .y(t => y(ease(t)))
+
+        var axisX = canvas.append('g')
+            .attr('class', 'axis  axis--x')
+            .attr('transform', `translate(0, ${height})`)
+            .call(d3.axisBottom(x))
+
+        axisX.append('text')
+            .attr('class', 'axis-title')
+            .attr('fill', 'black')
+            .attr('text-anchor', 'end')
+            .attr('x', width - 10)
+            .attr('y', 8)
+            .text('t = ')
+
+        var line = canvas.append('g')
+            .attr('class', 'line')
+            .append('path')
+            .datum(d3.range(0, 1, 0.002).concat(1))
+
+        var dot1 = canvas.append('circle')
+            .attr('r', 5)
+
+        var dot2 = canvas.append('circle')
+            .attr('cx', width+20)
+            .attr('r', 5)
+
+        var select = d3.select('#ease-type')
+            .on('change', changed)
+            .property('value', top.location.hash ? top.location.hash.slice(1) : "linear")
+            .each(changed)
+
+        function changed() {
+            ease = d3["ease" + this.value[0].toUpperCase() + this.value.slice(1)] || d3.easeLinearIn;
+            line.attr('d', path)
+                .attr('fill', 'none')
+                .attr('stroke', 'black')
+        }
+
+        d3.timer(function(elapsed) {
+            var t = (elapsed % 3000) / 3000;
+            dot1.attr('cx', x(t)).attr('cy', y(ease(t)));
+            dot2.attr('cy', y(ease(t)))
+        })
+    </script>
+</body>
+
+</html>
