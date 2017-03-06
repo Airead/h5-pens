@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="color.css">
+    <title>NavLayout</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+        /* pink rgba(233, 30, 99, 1) */
+
+        .header {
+            transition: margin-left 250ms;
+        }
+
+        .header.pad {
+            margin-left: 240px;
+        }
+
+        .nav {
+            padding: 0 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 56px;
+            background: rgba(63, 81, 181, 1);
+        }
+
+        .left {
+            display: flex;
+            align-items: center;
+            height: 32px;
+        }
+
+        .title {
+            font-size: 24px;
+            color: rgba(255, 255, 255, .87);
+        }
+
+        .icon {
+            background-image: url(images/menu.svg);
+            background-size: 24px 24px;
+            background-position: center;
+            background-repeat: no-repeat;
+            margin-right: 16px;
+            height: 32px;
+            width: 32px;
+            cursor: pointer;
+        }
+
+        .right {
+            display: flex;
+            align-items: center;
+            height: 32px;
+            font-size: 16px;
+        }
+
+        .link {
+            margin-left: 24px;
+            color: rgba(255, 255, 255, .87);
+            text-decoration: none;
+        }
+
+        .drawer {
+            position: absolute;
+            z-index: 100;
+            top: 0;
+            left: -240px;
+            height: 100%;
+            background-color: #eee;
+            transition: left 250ms;
+        }
+
+        .drawer-nav {
+            display: flex;
+            width: 240px;
+            flex-direction: column;
+            padding: 24px 0 0 48px;
+            box-sizing: border-box;
+        }
+
+        .top {
+            margin-bottom: 24px;
+        }
+
+        .top .title {
+            color: rgba(0, 0, 0, .87);
+        }
+
+        .bottom {
+            display: flex;
+            flex-flow: column;
+        }
+
+        .bottom .link {
+            color: rgba(0, 0, 0, .87);
+            margin-left: 4px;;
+            margin-top: 16px;
+        }
+
+        .drawer.show {
+            left: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="header" class="header">
+        <div class="nav">
+            <div class="left">
+                <span id="drawer-button" class="icon"></span>
+                <span class="title">Title</span>
+            </div>
+            <div class="right">
+                <a href="#" class="link">Link</a>
+                <a href="#" class="link">Link</a>
+                <a href="#" class="link">Link</a>
+                <a href="#" class="link">Link</a>
+            </div>
+        </div>
+    </div>
+    <div id="drawer" class="drawer hide">
+        <div class="drawer-nav">
+            <div class="top">
+                <div class="title">Title</div>
+            </div>
+            <div class="bottom">
+                <a href="#" class="link">Link</a>
+                <a href="#" class="link">Link</a>
+                <a href="#" class="link">Link</a>
+                <a href="#" class="link">Link</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        var header = document.getElementById('header');
+        var drawerButton = document.getElementById('drawer-button');
+        var drawer = document.getElementById('drawer');
+
+        drawerButton.addEventListener('click', function(event) {
+            event.stopPropagation();
+            console.log('show');
+            drawer.classList.add('show')
+            header.classList.add('pad');
+        });
+
+        document.addEventListener('click', function() {
+            console.log('hide;')
+            drawer.classList.remove('show');
+            header.classList.remove('pad')
+        });
+    </script>
+</body>
+
+</html>

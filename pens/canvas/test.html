@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Document</title>
+</head>
+
+<body>
+    <canvas id="canvas" style="position:absolute;top:0px;left:0px;z-index:1;border-radius: 50%;"></canvas>
+    <script>
+        var canvas = document.getElementById('canvas');
+        var ctx = canvas.getContext('2d');
+        canvas.width = 300;
+        canvas.height = 300;
+
+        //如果浏览器支持requestAnimFrame则使用requestAnimFrame否则使用setTimeout
+        window.requestAnimFrame = (function () {
+            return window.requestAnimationFrame ||
+                window.webkitRequestAnimationFrame ||
+                window.mozRequestAnimationFrame ||
+                function (callback) {
+                    window.setTimeout(callback, 1000 / 60);
+                };
+        })();
+
+        var step = 0;
+        var dh = 20;
+
+        function loop() {
+            console.log('loop')
+            //清空canvas
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            step++;
+            step++;
+            //角度转换成弧度
+            var angle = step * Math.PI / 180;
+            //矩形高度的变化量
+            var deltaHeight = Math.sin(angle) * dh;
+            //矩形高度的变化量(右上顶点)
+            var deltaHeightRight = Math.cos(angle) * dh;
+
+            //draw rect
+            //填充颜色
+            ctx.fillStyle = "rgba(0,222,255, 0.2)";
+            //开始绘制路径
+
+            ctx.beginPath();
+            ctx.moveTo(0, canvas.height / 2 + deltaHeight);
+            //ctx.lineTo(canvas.width, canvas.height/2+deltaHeightRight);
+            //画曲线
+            ctx.bezierCurveTo(canvas.width / 2, canvas.height / 2 + deltaHeight - dh, canvas.width / 2, canvas.height /
+                2 + deltaHeightRight - dh, canvas.width, canvas.height / 2 + deltaHeightRight);
+            ctx.lineTo(canvas.width, canvas.height);
+            ctx.lineTo(0, canvas.height);
+            ctx.lineTo(0, canvas.height / 2 + deltaHeight);
+            ctx.closePath();
+            ctx.fill();
+
+            requestAnimFrame(loop);
+        }
+        loop();
+    </script>
+</body>
+
+</html>

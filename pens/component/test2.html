@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="color.css">
+    <title>Document</title>
+    <style>
+        html {
+            height: 100%;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(233, 30, 99, .3);
+        }
+
+        .outer {
+            width: 100%;
+        }
+
+        .rect {
+            margin: auto;
+            width: 90%;
+            background: #fff;
+            border-bottom: 1px solid;
+            line-height: 56px;
+            /*flex-grow: 1;*/
+            box-sizing: border-box;
+            display: flex;
+        }
+    </style>
+</head>
+
+<body>
+    <script>
+        var num = 40;
+        for (var i = 0; i < num; i++) {
+            var outer = document.createElement('div');
+            outer.classList.add('outer');
+            var e = document.createElement('div');
+            e.classList.add('rect');
+            e.innerHTML = i;
+            outer.appendChild(e)
+            document.body.appendChild(outer);
+        }
+    </script>
+</body>
+
+</html>

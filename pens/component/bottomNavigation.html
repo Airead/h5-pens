@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="color.css">
+    <title>Bottom Navigations</title>
+    <style>
+        html {
+            height: 100%;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            flex-wrap: wrap;
+            width: 2000px;
+        }
+
+        .phone {
+            position: relative;
+            width: 360px;
+            height: 640px;
+            background: #fff;
+            margin-left: 16px;
+        }
+
+        .status-bar {
+            height: 24px;
+        }
+
+        .toolbar {
+            height: 144px;
+        }
+        /* .bottom-navigation */
+
+        .bottom-navigation {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 56px;
+            display: flex;
+        }
+
+        .bottom-navigation__item {
+            height: 100%;
+            background-color: rgb(248, 187, 208);
+            flex-grow: 1;
+        }
+
+        .bottom-navigation__item.active {
+            background-color: rgb(233, 30, 99);
+        }
+        /* bottom-sheet */
+
+        .bottom-sheet {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+            background-color: rgba(0, 0, 0, .4);
+            z-index: 900;
+        }
+
+        .bottom-sheet .content {
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            height: 320px;
+            width: 100%;
+            background-color: #fff;
+        }
+
+        .case-bottom-sheet .button-float {
+            position: absolute;
+            right: 16px;
+            top: 140px;
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+        }
+        /* buttons */
+
+        .case-buttons .content {
+            height: 400px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            align-items: center;
+        }
+
+        .case-buttons button {
+            min-width: 88px;
+            height: 36px;
+            border: 0;
+            background-color: #fff;
+            text-transform: uppercase;
+            font-size: 14px;
+            border-radius: 2px;
+        }
+
+        .case-buttons .button-float {
+            min-width: 56px;
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            font-size: 24px;
+        }
+
+        .case-buttons .button-icon {
+            min-width: 40px;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            color: #fff;
+        }
+        /* case cards */
+
+        .case-cards .bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, .2);
+        }
+
+        .case-cards .content {
+            display: flex;
+            flex-direction: column;
+            z-index: 2;
+            background-color: #eee;
+        }
+
+        .case-cards .card1 {
+            background-color: #fff;
+            height: 256px;
+            margin: 16px 16px 0;
+        }
+
+        .case-cards .card2 {
+            background-color: #fff;
+            height: 140px;
+            margin: 16px;
+        }
+        /* case chips */
+
+        .case-chips .chip {
+            position: relative;
+            top: 24px;
+            left: 32px;
+            width: 132px;
+            height: 36px;
+            border-radius: 18px;
+        }
+        /* case tables */
+
+        .case-tables .content {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #ddd;
+            height: 472px;
+        }
+
+        .case-tables .table {
+            background: #fff;
+            width: 260px;
+        }
+
+        .case-tables .table__header {
+            display: flex;
+            align-items: center;
+            height: 56px;
+        }
+
+        .case-tables .table__row {
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid #999;
+            height: 48px;
+        }
+
+        .case-tables .select {
+            width: 20px;
+            height: 20px;
+            margin-left: 16px;
+        }
+
+        .case-tables .table__header .select {
+            background-color: rgb(233, 30, 99);
+        }
+
+        .case-tables .table__row .select {
+            border: 1px solid #999;
+        }
+        /* case dialogs */
+
+        .case-dialogs .dialog {
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background-color: rgba(0, 0, 0, .2);
+        }
+
+        .case-dialogs .dialog__primary-content {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            width: 244px;
+            height: 220px;
+            background-color: #fff;
+        }
+
+        .case-dialogs .line {
+            height: 16px;
+            margin: 24px 24px 0;
+            background-color: rgb(233, 30, 99);
+        }
+
+        .case-dialogs .dialog__action {
+            position: absolute;
+            bottom: 24px;
+            right: 24px;
+            height: 36px;
+            width: 88px;
+            background-color: rgb(233, 30, 99);
+        }
+        /* case dividers */
+
+        .case-dividers .content {
+            display: flex;
+            flex-direction: column;
+            height: 472px;
+        }
+
+        .case-dividers .content .divider {
+            flex-grow: 1;
+        }
+
+        .case-dividers .content .divider+.divider {
+            border-top: 1px solid rgba(233, 30, 99, 1);
+        }
+        /* case exapnsion-panels */
+
+        .case-expansion-panels .content {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            height: 472px;
+            background-color: #ddd;
+        }
+
+        .case-expansion-panels .panel {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            margin: 0 24px 16px;
+            height: 48px;
+            background-color: #fff;
+        }
+
+        .case-expansion-panels .panel .title {
+            margin-top: 17px;
+            margin-left: 24px;
+            height: 14px;
+            width: 88px;
+            background-color: #999;
+        }
+
+        .case-expansion-panels .panel span {
+            margin-top: 12px;
+            color: rgba(233, 30, 99, 1);
+            margin-right: 16px;
+        }
+
+        .case-expansion-panels .panel.panel--expand {
+            height: 128px;
+        }
+
+        .case-expansion-panels .panel.panel--expand span {
+            transform: rotate(180deg);
+        }
+
+        /* case grid-lists */
+        .case-grid-lists .content {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            height: 472px;
+            background-color: #ddd;
+        }
+
+        .case-grid-lists .grid {
+            margin: 8px;
+            width: 100px;
+            background: #fff;
+        }
+
+        #pond {
+            width: 230px;
+            height: 230px;
+            display: flex;
+            background: #ddd;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .rect {
+            width: 40px;
+            height: 40px;
+            padding: 3px;
+            box-sizing: border-box;
+            border: 3px solid #ddd;
+        }
+    </style>
+</head>
+
+<body class="mdl-color--grey-500">
+    <div class="phone">
+        <div class="status-bar mdl-color--teal"></div>
+        <div class="toolbar mdl-color--teal-300"></div>
+        <div class="bottom-navigation">
+            <div class="bottom-navigation__item"></div>
+            <div class="bottom-navigation__item active"></div>
+            <div class="bottom-navigation__item"></div>
+        </div>
+    </div>
+    <div class="phone case-bottom-sheet">
+        <div class="status-bar mdl-color--teal"></div>
+        <div class="toolbar mdl-color--teal-300"></div>
+        <div class="bottom-sheet">
+            <div class="content"></div>
+        </div>
+        <div class="button-float mdl-color--pink"></div>
+    </div>
+    <div class="phone case-buttons">
+        <div class="status-bar mdl-color--teal"></div>
+        <div class="toolbar mdl-color--teal-300"></div>
+        <div class="content">
+            <button class="button-flat mdl-color-text--teal">flat</button>
+            <button class="button-raised mdl-shadow--2dp">raised</button>
+            <button class="button-float mdl-shadow--4dp mdl-color--pink mdl-color-text--white">+</button>
+            <button class="button-icon mdl-shadow--2dp mdl-color--teal">&</button>
+        </div>
+    </div>
+    <div class="phone case-cards">
+        <div class="status-bar mdl-color--teal"></div>
+        <div class="toolbar mdl-color--teal-300"></div>
+        <div class="content">
+            <div class="card1 mdl-shadow--2dp"></div>
+            <div class="card2 mdl-shadow--2dp"></div>
+        </div>
+    </div>
+    <div class="phone case-chips">
+        <div class="status-bar mdl-color--teal"></div>
+        <div class="toolbar mdl-color--teal-300"></div>
+        <div class="chip mdl-color--pink"></div>
+    </div>
+    <div class="phone case-tables">
+        <div class="status-bar mdl-color--teal"></div>
+        <div class="toolbar mdl-color--teal-300"></div>
+        <div class="content">
+            <div class="table">
+                <div class="table__header mdl-color--pink-100">
+                    <div class="select"></div>
+                </div>
+                <div class="table__row">
+                    <div class="select"></div>
+                </div>
+                <div class="table__row">
+                    <div class="select"></div>
+                </div>
+                <div class="table__row">
+                    <div class="select"></div>
+                </div>
+                <div class="table__row">
+                    <div class="select"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="phone case-dialogs">
+        <div class="status-bar mdl-color--teal"></div>
+        <div class="toolbar mdl-color--teal-300"></div>
+        <div class="dialog">
+            <div class="dialog__primary-content">
+                <div class="line"></div>
+                <div class="line" style="margin-top: 12px; margin-right: 80px;"></div>
+                <div class="dialog__action"></div>
+            </div>
+        </div>
+    </div>
+    <div class="phone case-dividers">
+        <div class="status-bar mdl-color--teal"></div>
+        <div class="toolbar mdl-color--teal-300"></div>
+        <div class="content">
+            <div class="divider"></div>
+            <div class="divider"></div>
+            <div class="divider"></div>
+            <div class="divider"></div>
+            <div class="divider"></div>
+        </div>
+    </div>
+    <div class="phone case-expansion-panels">
+        <div class="status-bar mdl-color--teal"></div>
+        <div class="toolbar mdl-color--teal-300"></div>
+        <div class="content">
+            <div class="panel">
+                <div class="title"></div>
+                <span>v</span>
+            </div>
+            <div class="panel panel--expand">
+                <div class="title"></div>
+                <span>v</span>
+            </div>
+        </div>
+    </div>
+     <div class="phone case-grid-lists">
+        <div class="status-bar mdl-color--teal"></div>
+        <div class="toolbar mdl-color--teal-300"></div>
+        <div class="content">
+            <div class="grid mdl-color--pink"></div>
+            <div class="grid"></div>
+            <div class="grid"></div>
+            <div class="grid"></div>
+            <div class="grid"></div>
+            <div class="grid"></div>
+            <div class="grid"></div>
+            <div class="grid"></div>
+            <div class="grid"></div>
+        </div>
+    </div>
+    <div class="phone">
+        <div id="pond">
+            <div class="rect mdl-color--red"></div>
+            <div class="rect mdl-color--green"></div>
+            <div class="rect mdl-color--green"></div>
+            <div class="rect mdl-color--green"></div>
+            <div class="rect mdl-color--green"></div>
+            <div class="rect mdl-color--yellow y"></div>
+            <div class="rect mdl-color--yellow y"></div>
+        </div>
+    </div>
+    <script>
+        var phones = document.getElementsByClassName('phone');
+        var width = 360 * phones.length + 16 * (phones.length + 1);
+        document.body.style.width = width + 'px';
+    </script>
+</body>
+
+</html>

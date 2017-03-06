@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Material Design Lite Learn Template</title>
+    <link rel="stylesheet" href="/lib/mdl/material.min.css">
+    <link rel="stylesheet" href="/lib/mdl/material-icons.css">
+    <script src="/lib/mdl/material.min.js"></script>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .showcases {
+            padding: 0 24px;
+        }
+
+        .showcases__title {
+            border-top: 1px solid #3f51b5;
+            padding-top: 16px;
+            margin-top: 32px;
+            font-size: 36px;
+        }
+
+        .case {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 24px;
+        }
+
+        #typography .case {
+            flex-direction: column;
+        }
+
+        #badge .case {
+            padding-top: 24px;
+        }
+
+        #placehold {
+            flex-direction: column;
+        }
+
+        #buttons .case {
+            margin: 16px;
+        }
+        /* cards */
+
+        .demo-card-wide.mdl-card {
+            width: 512px;
+        }
+
+        .demo-card-wide>.mdl-card__title {
+            color: #fff;
+            height: 176px;
+            background-image: url(images/welcome_card.jpg);
+            background-size: cover;
+            background-position: center;
+        }
+
+        .demo-card-wide>.mdl-card__menu {
+            color: #fff;
+        }
+
+        .demo-card-square.mdl-card {
+            width: 320px;
+            height: 320px;
+        }
+
+        .demo-card-square>.mdl-card__title {
+            background-image: url(images/dog.png);
+            background-repeat: no-repeat;
+            background-position: bottom right 15%;
+            background-color: #46B6AC;
+            color: #fff;
+        }
+
+        .demo-card-image.mdl-card {
+            width: 256px;
+            height: 256px;
+            background-image: url('images/image_card.jpg');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .demo-card-image>.mdl-card__actions {
+            height: 52;
+            padding: 16px;
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        .demo-card-image__filename {
+            color: #fff;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .demo-card-event.mdl-card {
+            width: 256px;
+            height: 256px;
+            background: #3e4eb8;
+        }
+
+        .demo-card-event>.mdl-card__actions {
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .demo-card-event .mdl-card__title-text {
+            align-self: flex-start;
+        }
+
+        .demo-card-event>.mdl-card__actions {
+            display: flex;
+            box-sizing: border-box;
+            align-items: center;
+        }
+
+        .demo-card-event>.mdl-card__actions>.material-icons {
+            padding-right: 10px;
+        }
+
+        .demo-card-event>.mdl-card__title,
+        .demo-card-event>.mdl-card__actions,
+        .demo-card-event>.mdl-card__actions>.mdl-button {
+            color: #fff;
+        }
+        /* Lists */
+
+        .demo-list-item,
+        .demo-list-icon,
+        .demo-list-action {
+            width: 300px;
+        }
+    </style>
+</head>
+
+<body class="mdl-color--grey-100">
+    <div class="showcases">
+        <div id="typography">
+            <h5 class="showcases__title">Typography</h5>
+            <div class="case">
+                <h1>This is h1 <small>display-3 56px</small></h1>
+                <h2>This is h2 <small>display-2 45px</small></h2>
+                <h3>This is h3 <small>display-1 34px</small></h3>
+                <h4>This is h4 <small>display-headline 24px</small></h4>
+                <h5>This is h5 <small>display-title 20px</small></h5>
+                <h6>This is h6 <small>display-subhead 16px</small></h6>
+                <p>This is p <small>body-1 14px</small></p>
+                <blockquote>This is blockquote. 24px</blockquote>
+            </div>
+        </div>
+        <div id="badge">
+            <h5 class="showcases__title">badge</h5>
+            <div class="case">
+                <div class="material-icons mdl-badge" style="font-size: 32px" data-badge="1">account_box</div>
+                <div class="material-icons mdl-badge" style="font-size: 32px" data-badge="♥">account_box</div>
+                <div class="material-icons mdl-badge mdl-badge--overlap" style="font-size: 32px" data-badge="1">account_box</div>
+                <div class="material-icons mdl-badge mdl-badge--overlap" style="font-size: 32px" data-badge="♥">account_box</div>
+                <div class="material-icons mdl-badge mdl-badge--no-background" style="font-size: 32px" data-badge="1">account_box</div>
+                <div class="material-icons mdl-badge mdl-badge--overlap mdl-badge--no-background" style="font-size: 32px" data-badge="♥">account_box</div>
+            </div>
+            <div class="case">
+                <div class="mdl-badge" data-badge="1">inbox</div>
+                <div class="mdl-badge" data-badge="♥">Mood</div>
+                <div class="mdl-badge mdl-badge--overlap" data-badge="1">inbox</div>
+                <div class="mdl-badge mdl-badge--overlap" data-badge="♥">Mood</div>
+                <div class="mdl-badge mdl-badge--no-background" data-badge="1">inbox</div>
+                <div class="mdl-badge mdl-badge--overlap mdl-badge--no-background" data-badge="♥">Mood</div>
+            </div>
+        </div>
+        <div id="buttons">
+            <h5 class="showcases__title">buttons</h5>
+            <p>
+                object: none | --raise | --fab | --icon<br> attr: color | ripple
+            </p>
+            <div class="case">
+                <button class="mdl-button mdl-js-button">none</button>
+                <button class="mdl-button mdl-js-button mdl-shadow--2dp">shadow</button>
+                <div class="mdl-button mdl-js-button mdl-js-ripple-effect">ripple</div>
+                <div class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--colored">none</div>
+            </div>
+            <div class="case">
+                <button class="mdl-button mdl-js-button mdl-button--raised">raised</button>
+                <div class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">ripple</div>
+                <div class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">ripple</div>
+            </div>
+            <div class="case">
+                <button class="mdl-button mdl-js-button mdl-button--fab">+</button>
+                <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect">+</button>
+                <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored">+</button>
+                <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab">+</button>
+            </div>
+            <div class="case">
+                <button class="mdl-button mdl-js-button mdl-button--icon"><i class="material-icons">mood</i></button>
+                <button class="mdl-button mdl-js-button mdl-button--icon mdl-button--colored"><i class="material-icons">mood</i></button>
+                <button class="mdl-button mdl-js-button mdl-button--icon mdl-button--colored mdl-js-ripple-effect"><i class="material-icons">mood</i></button>
+            </div>
+        </div>
+        <div id="cards">
+            <h5 class="showcases__title">cards</h5>
+            <ul>
+                <li>border shadow title subtitle media supporting-text actions menu</li>
+                <li>--border 是一个动态属性</li>
+            </ul>
+            <div class="case">
+                <div class="demo-card-wide mdl-card mdl-shadow--2dp">
+                    <div class="mdl-card__title">
+                        <h2 class="mdl-card__title-text">Welcome</h2>
+                    </div>
+                    <div class="mdl-card__supporting-text">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris sagittis pellentesque lacus eleifend lacinia...
+                    </div>
+                    <div class="mdl-card__actions mdl-card--border">
+                        <a href="#cards" class="mdl-button mdl-js-button mdl-button--colored mdl-js-ripple-effect">Get Started</a>
+                    </div>
+                    <div class="mdl-card__menu">
+                        <button class="mdl-button mdl-js-button mdl-button--icon mdl-js-ripple-effect">
+                            <i class="material-icons">share</i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="case">
+                <div class="demo-card-square mdl-card mdl-shadow--2dp">
+                    <div class="mdl-card__title mdl-card--expand">
+                        <h2 class="mdl-card__title-text">Update</h2>
+                    </div>
+                    <div class="mdl-card__supporting-text">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenan convallis.
+                    </div>
+                    <div class="mdl-card__actions mdl-card--border">
+                        <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+                            View Updates
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="case">
+                <div class="demo-card-image mdl-card mdl-shadow--2dp">
+                    <div class="mdl-card__title mdl-card--expand"></div>
+                    <div class="mdl-card__actions">
+                        <span class="demo-card-image__filename">Image.jpg</span>
+                    </div>
+                </div>
+                <div class="demo-card-event mdl-card mdl-shadow--2dp">
+                    <div class="mdl-card__title mdl-card--expand">
+                        <h4 class="mdl-card__title-text">
+                            Featured event:<br> May 24, 2016<br> 7-11pm
+                        </h4>
+                    </div>
+                    <div class="mdl-card__actions mdl-card--border">
+                        <a href="#cards" class="mdl-button mdl-js-button mdl-button--colored mdl-js-ripple-effect">
+                            Add to Calendar
+                        </a>
+                        <div class="mdl-layout-spacer"></div>
+                        <i class="material-icons">event</i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="chips">
+            <h5 class="showcases__title">chips</h5>
+            <div class="case">
+                <span class="mdl-chip">
+                    <span class="mdl-chip__text">Basic Chip</span>
+                </span>
+                <span class="mdl-chip mdl-chip--deletable">
+                    <span class="mdl-chip__text">Deletable Chip</span>
+                <button class="mdl-chip__action">
+                        <i class="material-icons">cancel</i>
+                    </button>
+                </span>
+                <button class="mdl-chip">
+                    <span class="mdl-chip__text">Button Chip</span>
+                </button>
+            </div>
+            <div class="case">
+                <span class="mdl-chip mdl-chip--contact">
+                    <span class="mdl-chip__contact mdl-color--teal mdl-color-text--white">A</span>
+                <span class="mdl-chip__text">Contact Chip</span>
+                </span>
+                <span class="mdl-chip mdl-chip--contact mdl-chip--deletable">
+                    <img src="images/user.jpg" class="mdl-chip__contact"></img>
+                    <span class="mdl-chip__text">Deletable Contact Chip</span>
+                <button class="mdl-chip__action"><i class="material-icons">cancel</i></button>
+                </span>
+            </div>
+        </div>
+        <div id="layout">
+            <h5 class="showcases__title">layout</h5>
+        </div>
+        <div id="lists">
+            <h5 class="showcases__title">Lists</h5>
+            <div class="case">
+                <ul class="demo-list-item mdl-list">
+                    <li class="mdl-list__item">
+                        <span class="mdl-list__item-primary-content">Bryan Cranston</span>
+                    </li>
+                    <li class="mdl-list__item">
+                        <span class="mdl-list__item-primary-content">Aaron Paul</span>
+                    </li>
+                    <li class="mdl-list__item">
+                        <span class="mdl-list__item-primary-content">Bob Odenkirk</span>
+                    </li>
+                </ul>
+            </div>
+            <hr>
+            <div class="case">
+                <ul class="demo-list-item mdl-list">
+                    <li class="mdl-list__item">
+                        <span class="mdl-list__item-primary-content">
+                            <i class="material-icons mdl-list__item-icon">person</i>
+                            Bryan Cranston</span>
+                    </li>
+                    <li class="mdl-list__item">
+                        <span class="mdl-list__item-primary-content">
+                            <i class="material-icons mdl-list__item-icon">person</i>
+                            Aaron Paul</span>
+                    </li>
+                    <li class="mdl-list__item">
+                        <span class="mdl-list__item-primary-content">
+                            <i class="material-icons mdl-list__item-icon">person</i>
+                            Bob Odenkirk</span>
+                    </li>
+                </ul>
+            </div>
+            <hr>
+            <div class="case">
+                <ul class="demo-list-action mdl-list">
+                    <li class="mdl-list__item">
+                        <div class="mdl-list__item-primary-content">
+                            <i class="material-icons mdl-list__item-avatar">person</i>
+                            <span>Bryan Cranston</span>
+                        </div>
+                        <a href="#lists" class="mdl-list__item-secondary-action mdl-color-text--accent" href="#">
+                            <i class="material-icons">star</i>
+                        </a>
+                    </li>
+                    <li class="mdl-list__item">
+                        <div class="mdl-list__item-primary-content">
+                            <i class="material-icons mdl-list__item-avatar">person</i>
+                            <span>Aaron Paul</span>
+                        </div>
+                        <span class="mdl-list__item-secondary-action mdl-color-text--accent" href="#">
+                             <i class="material-icons">star</i>
+                        </span>
+                    </li>
+                    <li class="mdl-list__item">
+                        <div class="mdl-list__item-primary-content">
+                            <i class="material-icons mdl-list__item-avatar">person</i>
+                            <span>Bob Odenkirk</span>
+                        </div>
+                        <span class="mdl-list__item-secondary-action mdl-color-text--accent" href="#">
+                             <i class="material-icons">star</i>
+                        </span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div id="Loading">
+            <h5 class="showcases__title">Loading</h5>
+            <div class="case">
+                <!--<div id="p1" class="mdl-progress mdl-js-progress"></div>-->
+            </div>
+            <div class="case">
+                <!--<div class="mdl-progress mdl-js-progress mdl-progress--indeterminate"></div>-->
+            </div>
+            <div class="case">
+                <!--<div id="p3" class="mdl-progress mdl-js-progress"></div>-->
+            </div>
+        </div>
+        <div id="placehold">
+            <h1>&nbsp;</h1>
+            <h1>&nbsp;</h1>
+            <h1>&nbsp;</h1>
+            <h1>&nbsp;</h1>
+            <h1>&nbsp;</h1>
+        </div>
+    </div>
+    <script>
+        document.querySelector('#p1').addEventListener('mdl-componentupgraded', function () {
+            console.log('into mdl-componentupgraded')
+            this.MaterialProgress.setProgress(44);
+        });
+        document.querySelector('#p3').addEventListener('mdl-componentupgraded', function () {
+            this.MaterialProgress.setProgress(33);
+            this.MaterialProgress.setBuffer(87);
+        });
+    </script>
+</body>
+
+</html>

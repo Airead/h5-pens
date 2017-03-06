@@ -21,11 +21,24 @@
         svg {
             border: 1px solid black;
         }
+
+        table {
+            border-collapse: collapse;
+        }
+
+        tr, td {
+            border: 1px solid;
+        }
+
+        td {
+            padding: 8px 16px;
+        }
+
     </style>
 </head>
 
 <body>
-    <div id="svg-canvas"></div>
+    <!--<div id="svg-canvas"></div>-->
     <script>
         function createCanvas(width, height, margin) {
             var svg = d3.select('#svg-canvas').append('svg');
@@ -50,40 +63,26 @@
         var height = 440;
         var canvas = createCanvas(width, height, 30);
 
-        var x = d3.scaleLinear().domain([0, width]).range([0, width]);
-        var y = d3.scaleLinear().domain([0, height]).range([height, 0]);
-
-        canvas.g.append('rect')
-            .attr('width', width)
-            .attr('height', height)
-            .attr('fill', '#e7e7e7')
-            .attr('stroke', 'none')
-
-        var axisY = canvas.g.append('g')
-            .attr('transform', `translate(0, 0)`)
-            .call(d3.axisLeft(y).tickSize(-height))
-
-        var axisX = canvas.g.append('g')
-            .attr('transform', `translate(0, ${height})`)
-            .call(d3.axisBottom(x).tickSize(-width))
-
-        customAxis(axisX);
-        customAxis(axisY);
-
-        function customAxis(axis) {
-            axis.selectAll('line')
-                .attr('stroke', '#fff')
-                .attr('opacity', (d, i) => i % 2 ? 0.5 : 1)
-
-            axis.selectAll('text')
-                .attr('display', (d, i) => {
-                    console.log(i);
-                    return i % 2 ? 'none' : 'block'
-                })
-
-            axis.selectAll('.domain')
-                .style('display', 'none')
+        var data = [];
+        for (var i = 1; i <= 10; i++) {
+            var row = [];
+            for (var j = 1; j <= 10; j++) {
+                row.push([i, j].join(','));
+            }
+            data.push(row);
         }
+
+        var td = d3.select('body').append('table')
+            .selectAll('tr')
+            .data(data)
+            .enter().append('tr')
+            .selectAll('td')
+            .data(d => {
+                console.log('d', d);
+                return d;
+            })
+            .enter().append('td')
+            .text(d => d)
     </script>
 </body>
 

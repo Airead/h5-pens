@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>阅读练习</title>
+    <style>
+        html {
+            height: 100%;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+            padding: 0;
+            min-height: 100%;
+            background-color: black;
+        }
+
+        #page {
+            position: relative;
+        }
+
+        .text-line, .text-glance, .text-glance span {
+            position: absolute;
+        }
+
+        .text-glance span {
+            color: rgba(63, 81, 181, .3);
+        }
+
+        .text-glance.text-active span {
+            color: rgba(255, 255, 255, 1);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div id="primary-content">
+            <div id="page"></div>
+        </div>
+    </div>
+    <script src="js/realRead.js"></script>
+</body>
+
+</html>

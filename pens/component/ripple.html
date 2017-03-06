@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+        html {
+            height: 100%;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+            padding: 0;
+            height: 100%;
+        }
+
+        .ripple-container {
+            position: relative;
+            height: 200px;
+            width: 200px;
+            background-color: rgba(0, 0, 0, .3);
+            overflow: hidden;
+        }
+
+        .ripple {
+            position: absolute;
+            opacity: .3;
+            left: 0;
+            top: 0;
+            height: 6px;
+            width: 6px;
+            background-color: orangered;
+            border-radius: 50%;
+            transform: translate(-50%, -50%) scale(0.01);
+        }
+
+        .is-animate {
+            transition: opacity 300ms, transform 300ms;
+        }
+
+        .ripple.move {
+            transform: translate(-50%, -50%) scale(2);
+        }
+    </style>
+</head>
+
+<body>
+    <div id="container" class="ripple-container">
+        <div id="ripple" class="ripple is-animate"></div>
+    </div>
+    <script>
+        var container = document.getElementById('container');
+        var ripple = document.getElementById('ripple');
+
+        container.addEventListener('mousedown', function (event) {
+            console.log('clientX, Y: ', event.clientX, event.clientY);
+            var rect = event.currentTarget.getBoundingClientRect();
+            var size = parseInt(Math.sqrt(rect.width * rect.width + rect.height * rect.height))
+
+            ripple.style.width = size + 'px';
+            ripple.style.height = size + 'px';
+
+            console.log('set 1');
+            ripple.style.opacity = 0.4;
+            ripple.classList.add('is-animate');
+            ripple.classList.add('move');
+            setTimeout(function () {
+                console.log('set 0');
+                ripple.style.opacity = 0;
+            }, 200);
+
+            ripple.style.left = (event.clientX - rect.left) + 'px';
+            ripple.style.top = (event.clientY - rect.top) + 'px';
+
+        });
+
+        ripple.addEventListener('transitionend', function () {
+            ripple.classList.remove('is-animate');
+            ripple.classList.remove('move');
+            console.log('end');
+        });
+    </script>
+</body>
+
+</html>
