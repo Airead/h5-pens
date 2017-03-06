@@ -103,10 +103,13 @@ function foramtContent(content) {
         return formatContentGetLines(oline, lineFontNum);
     });
     info.lines = flatArray(info.lines);
+    info.lines = info.lines.filter(function(line) {return line;});
 
     info.glances = info.lines.map(function (line) {
         return formatContentGetGlances(line, glanceFontNum);
     });
+
+    appendLessTail(info.glances);
 
     info.pageNum = Math.ceil(info.glances.length / pageLineNum);
 
@@ -130,6 +133,20 @@ function splitArray(arr, num) {
 
 function formatContentGetGlances(line, num) {
     return splitArray(line, num);
+}
+
+function appendLessTail(glances) {
+    for (var i = 0; i < glances.length; i++) {
+        var g = glances[i];
+        if (g.length < 2) {
+            continue;
+        }
+        var lastG = g[g.length - 1];
+        if (lastG.length < 4) {
+            g[g.length - 2] += lastG;
+            g.splice(g.length - 1, 1);
+        }
+    }
 }
 
 function flatArray(arr) {
