@@ -18,6 +18,7 @@ main();
 
 function main() {
     var query = getQuery();
+    console.log('get query', query);
     updateByQuery(query);
 
     if (!txtSrc) {
@@ -58,7 +59,19 @@ function getQuery() {
 
 function updateByQuery(query) {
     if (query.txtSrc) {
-        txtSrc = query.txtSrc;
+        txtSrc = decodeURIComponent(query.txtSrc);
+    }
+    if (query.pageLineNum) {
+        pageLineNum = parseInt(query.pageLineNum) || 23;
+    }
+    if (query.lineFontNum) {
+        lineFontNum = parseInt(query.lineFontNum) || 39;
+    }
+    if (query.glanceFontNum) {
+        glanceFontNum = parseInt(query.glanceFontNum) || 13;
+    }
+    if (query.showLine) {
+        showLine = parseInt(query.showLine) || 0;
     }
 }
 

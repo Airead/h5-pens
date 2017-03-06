@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>实际阅读索引</title>
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        .inputs {
+            padding: 16px 24px;
+        }
+
+        label {
+            display: flex;
+            font-size: 16px;
+            padding: 6px 0;
+        }
+
+        label span {
+            display: inline-block;
+            width: 100px;
+        }
+
+        label input {
+            flex-grow: 1;
+            padding: 6px 12px;
+        }
+
+        button {
+            border: 1px solid;
+            padding: 6px 12px;
+            font-size: 14px;
+            margin-top: 4px;
+        }
+    </style>
+</head>
+<body>
+    <!-- txtSrc | pageLineNum | lineFontNum | glanceFontNum |  -->
+    <div class="inputs">
+        <label for="txt-src">
+            <span>txt资源</span>
+            <input id="txt-src" type="text" value="http://123.56.101.172/asset/txt/baby.txt">
+        </label>
+        <label for="page-line-num">
+            <span>每页行数</span>
+            <input id="page-line-num" type="number" value="23">
+        </label>
+        <label for="line-font-num">
+            <span>每行字数</span>
+            <input id="line-font-num" type="number" value="39">
+        </label>
+        <label for="glance-font-num">
+            <span>每眼字数</span>
+            <input id="glance-font-num" type="number" value="13">
+        </label>
+        <label for="show-line">
+            <span>哪行开始</span>
+            <input id="show-line" type="number" value="0">
+        </label>
+        <button id="go">Go</button>
+    </div>
+
+    <script>
+        var url = 'realRead.html';
+        var goBtn = document.getElementById('go');
+        var txtSrcEl = document.getElementById('txt-src');
+        var pageLineNumEl = document.getElementById('page-line-num');
+        var lineFontNumEl = document.getElementById('line-font-num');
+        var glanceFontNumEl = document.getElementById('glance-font-num');
+        var showLineEl = document.getElementById('show-line');
+
+        goBtn.addEventListener('click', go);
+
+        function collectInfo() {
+            return {
+                txtSrc: encodeURIComponent(txtSrcEl.value),
+                pageLineNum: pageLineNumEl.value,
+                lineFontNum: lineFontNumEl.value,
+                glanceFontNum: glanceFontNumEl.value,
+                showLine: showLineEl.value,
+            }
+        }
+
+        function go() {
+            var info = collectInfo();
+            var hash = [];
+
+            Object.keys(info).forEach(function(key) {
+                hash.push(key + '=' + info[key]);
+            });
+            hash = '#' + hash.join('&');
+
+            var targetUrl = url + hash;
+
+            window.open(targetUrl);
+        }
+    </script>
+</body>
+</html>
