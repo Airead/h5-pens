@@ -146,6 +146,9 @@ function flatArray(arr) {
 }
 
 function showContentInfo(showLine) {
+    var lineIndex = document.getElementById('line-index');
+    lineIndex.innerHTML = [showLine, contentInfo.glances.length].join('/');
+
     var page = document.getElementById('page');
     page.style.width = (fontSize * lineFontNum) + 'px';
     page.style.height = (fontSize * pageLineNum * 1.3) + 'px';
