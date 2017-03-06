@@ -3,6 +3,7 @@ var contentInfo = {};
 var pageLineNum = 23;
 var lineFontNum = 39;
 var glanceFontNum = 13;
+var glanceLineNum = 1;
 var fontSize = 16;
 var showLine = 0;
 var traintimer = null;
@@ -11,7 +12,8 @@ var txtSrc = null;
 
 var curState = {
     line: 0,
-    glance: 0
+    glance: 0,
+    glanceLine: 0
 };
 
 main();
@@ -210,22 +212,45 @@ function next(done) {
     var selector = [activeLine, activeGlance].join(' ');
     var activeNodes = document.querySelectorAll(selector);
 
-    for (var i = 0; i < activeNodes.length; i++) {
-        activeNodes[i].classList.add('text-active');
-    }
-
+    glanceLineNum = Math.ceil(glanceFontNum / lineFontNum);
     console.log("curState", curState, showLine);
-    curState.glance += 1;
-    if (curState.glance >= contentInfo.glances[showLine + curState.line].length) {
-        curState.glance = 0;
-        curState.line += 1;
+    if (glanceLineNum < 2) {
+        for (var i = 0; i < activeNodes.length; i++) {
+            activeNodes[i].classList.add('text-active');
+        }
 
-        if (curState.line >= contentInfo.glances.length || curState.line % pageLineNum === 0) {
-            curState.line = 0;
+        curState.glance += 1;
+        if (curState.glance >= contentInfo.glances[showLine + curState.line].length) {
+            curState.glance = 0;
+            curState.line += 1;
+
+            if (curState.line >= contentInfo.glances.length || curState.line % pageLineNum === 0) {
+                curState.line = 0;
+                showLine += pageLineNum;
+                return done && done(null, showLine);
+            }
+        }
+    } else {
+        activeLine = [];
+        for (var j = 0; j < glanceLineNum; j++) {
+            activeLine.push('.text-line-' + (curState.glanceLine + j));
+        }
+
+        selector = activeLine;
+        activeNodes = document.querySelectorAll(selector);
+
+        for (var k = 0; k < activeNodes.length; k++) {
+            activeNodes[k].classList.add('text-active');
+        }
+
+        curState.glanceLine += glanceLineNum;
+        if (curState.glanceLine >= pageLineNum) {
+            curState.glanceLine = 0;
             showLine += pageLineNum;
             return done && done(null, showLine);
         }
     }
+
 
     return done && done();
 }
