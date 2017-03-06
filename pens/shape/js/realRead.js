@@ -168,6 +168,8 @@ function showContentInfo(showLine) {
             for (var k = 0; k < chars.length; k++) {
                 var text = document.createElement('span');
                 text.innerHTML = chars[k];
+                text.style.width = fontSize + 'px';
+                text.style.height = fontSize + 'px';
                 text.style.left = (fontSize * k) + 'px';
                 text.style.top = 0;
                 glance.appendChild(text);
