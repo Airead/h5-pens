@@ -7,92 +7,43 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
     <style>
+        html {
+            height: 100%;
+        }
         body {
             margin: 0;
+            height: 100%;
         }
 
-        text {
-            fill: black;
+        .container {
+            box-sizing: border-box;
+            display: flex;
+            min-height: 100px;
+            padding: 8px;
+        }
+
+        .rect {
+            width: 25%;
+            margin: 8px;
+        }
+
+        .red {
+            background-color: palevioletred;
+        }
+
+        .blue {
+            background-color: cornflowerblue;
         }
     </style>
 </head>
 
 <body>
-    <svg style="width: 546px; height: 322px; display: block;">
-        <g class="text-line" transform="translate(0,0)">
-            <g class="text-glance" transform="translate(0,0)">
-                <text>0</text>
-                <text>1</text>
-                <text>2</text>
-                <text>3</text>
-                <text>4</text>
-                <text>5</text>
-                <text>6</text>
-                <text>7</text>
-                <text>8</text>
-                <text>9</text>
-                <text>0</text>
-                <text>1</text>
-                <text>2</text>
-            </g>
-            <g class="text-glance" transform="translate(182,0)">
-                <text>3</text>
-                <text>4</text>
-                <text>5</text>
-                <text>6</text>
-                <text>7</text>
-                <text>8</text>
-                <text>9</text>
-                <text>0</text>
-                <text>1</text>
-                <text>2</text>
-                <text>3</text>
-                <text>4</text>
-                <text>5</text>
-            </g>
-            <g class="text-glance" transform="translate(364,0)">
-                <text>6</text>
-                <text>7</text>
-                <text>8</text>
-                <text>9</text>
-                <text>0</text>
-                <text>1</text>
-                <text>2</text>
-                <text>3</text>
-                <text>4</text>
-                <text>5</text>
-                <text>6</text>
-                <text>7</text>
-                <text>8</text>
-            </g>
-        </g>
-        <g class="text-line" transform="translate(0,14)">
-            <g class="text-glance" transform="translate(0,0)">
-                <text>9</text>
-                <text>0</text>
-                <text>1</text>
-                <text>2</text>
-                <text>3</text>
-                <text>4</text>
-                <text>5</text>
-                <text>6</text>
-                <text>7</text>
-                <text>8</text>
-                <text>9</text>
-                <text>0</text>
-                <text>1</text>
-            </g>
-            <g class="text-glance" transform="translate(182,0)">
-                <text>2</text>
-                <text>3</text>
-                <text>4</text>
-                <text>5</text>
-            </g>
-        </g>
-        <g class="text-line" transform="translate(0,28)">
-            <g class="text-glance" transform="translate(0,0)"></g>
-        </g>
-    </svg>
+    <div class="container">
+        <div class="rect red"></div>
+        <div class="rect red"></div>
+        <div class="rect red"></div>
+        <div class="rect red"></div>
+    </div>
 </body>
 
 </html>

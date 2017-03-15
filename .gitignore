@@ -35,3 +35,5 @@ ignores
 .node_repl_history
 
 .DS_Store
+
+pens/test
