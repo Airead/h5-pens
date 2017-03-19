@@ -75,6 +75,9 @@ function updateByQuery(query) {
     if (query.showLine) {
         showLine = parseInt(query.showLine) || 0;
     }
+    if (query.tick) {
+        tick = parseInt(query.tick) || 330;
+    }
 }
 
 function genContent() {
