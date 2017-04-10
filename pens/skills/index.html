@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="main.css">
+</head>
+
+<body>
+    <div id="app" class="container">
+        <div v-for="skillObj of skillList" class="skill-card mdl-shadow--2dp">
+            <div class="title">
+                <h2 class="skill-name">{{skillObj.title}}</h2>
+                <span class="time-acc">{{skillObj.costSum | showHour}}</span>
+                <span class="update">{{skillObj.lastUpdateDate}}</span>
+            </div>
+            <div class="badge-container">
+                <ul class="badges">
+                    <li v-for="gua of skillObj.guas" class="badge">
+                        <div v-for="think in gua" v-on:click="openYao(think)" v-on:mouseover="mouseoverYao(think)" :title="think.name" class="yao"
+                        :class="{yin: think.yao%2 === 0, unactive: think.yao < 0}">{{think.title}}</div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <script src="../../lib/vue/vue.min.js"></script>
+    <script src="../../lib/d3/d3-dsv.v1.min.js"></script>
+    <script src="main.js"></script>
+</body>
+
+</html>
