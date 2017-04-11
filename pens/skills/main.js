@@ -145,6 +145,7 @@ var skillNames = [
     'JavaScript',
     'Vue',
     'Vue2',
+    '切身体验',
 ];
 
 main();
@@ -181,14 +182,19 @@ function getData(names, done) {
 
     var data = {};
     eachSeries(names, function(name, cb) {
-        request('skillContent/' + name + '.tsv', function(err, text) {
+        request('skillContent/' + name + '.csv', function(err, text) {
             if (err) return done(err);
             data[name] = {
                 title: name,
-                exercises: d3.csvParse(text),
+                exercises: [],
             };
 
-            parseExercise(data[name].exercises);
+            text = removeComments(text);
+            console.log('text', text);
+            var exs = d3.csvParse(text);
+
+            parseExercise(exs);
+            data[name].exercises = exs;
 
             cb(null, text);
         });
@@ -200,6 +206,14 @@ function getData(names, done) {
 
         return done(null, data);
     });
+
+    function removeComments(text) {
+        var lines = text.split('\n');
+        lines = lines.filter(function(line) {
+            return line[0] !== '#';
+        });
+        return lines.join('\n');
+    }
 
     function parseExercise(exercises) {
         for (var i = 0; i < exercises.length; i++) {
@@ -281,19 +295,17 @@ function fillNeedComputeInfo(skillObj) {
         }
     }
 
-    for (i = 0; i < tasks.length; i++) {
-        costSum += (tasks[i].cost || 0);
-    }
-
     // get last update date
     for (i = 0; i < exs.length; i++) {
         e = exs[i];
+        costSum += (e.cost || 0);
         var ts = new Date(e.date).getTime();
         if (lastUpdateTs < ts) {
             lastUpdateTs = ts;
         }
     }
 
+    skillObj.introLink = ['skillContent/', skillObj.title, '.md'].join('');
     skillObj.tasks = tasks;
     skillObj.thinks = thinks;
     skillObj.costSum = costSum;

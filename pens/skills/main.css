@@ -32,8 +32,13 @@ body {
 .skill-card .skill-name {
     margin: 0;
     padding: 0;
-    font-size: 24px;
     flex-grow: 1;
+}
+
+.skill-card .skill-name a {
+    font-size: 24px;
+    color: rgba(0, 0, 0, .87);
+    text-decoration: none;
 }
 
 .skill-card .time-acc {

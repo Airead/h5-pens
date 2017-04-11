@@ -13,7 +13,9 @@
     <div id="app" class="container">
         <div v-for="skillObj of skillList" class="skill-card mdl-shadow--2dp">
             <div class="title">
-                <h2 class="skill-name">{{skillObj.title}}</h2>
+                <h2 class="skill-name">
+                    <a :href="skillObj.introLink">{{skillObj.title}}</a>
+                </h2>
                 <span class="time-acc">{{skillObj.costSum | showHour}}</span>
                 <span class="update">{{skillObj.lastUpdateDate}}</span>
             </div>
