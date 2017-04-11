@@ -145,6 +145,7 @@ var skillNames = [
     'JavaScript',
     'Vue',
     '切身体验',
+    '编程世界',
 ];
 
 main();
