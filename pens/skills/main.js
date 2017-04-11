@@ -144,7 +144,6 @@ var dataOnline = {};
 var skillNames = [
     'JavaScript',
     'Vue',
-    'Vue2',
     '切身体验',
 ];
 
@@ -272,7 +271,11 @@ function formatData(skillData) {
     }
 
     skillList.sort(function(a, b) {
-        return b.thinks.length - a.thinks.length;
+        var ret = b.thinks.length - a.thinks.length;
+        if (ret === 0) {
+            ret = b.costSum - a.costSum;
+        }
+        return ret;
     });
 
     skillData.skillList = skillList;
