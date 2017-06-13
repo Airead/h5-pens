@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>test paperjs</title>
+    <!-- Load the Paper.js library -->
+    <script type="text/javascript" src="../../js/paper/paper-full.min.js"></script>
+    <style>
+        html,
+        body {
+            margin: 0;
+            overflow: hidden;
+            height: 100%;
+        }
+
+        #myCanvas {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="myCanvas" resize></canvas>
+    <script>
+        paper.install(window);
+        paper.setup('myCanvas');
+
+        var circle = new Path.Circle({
+            center: view.center,
+            radius: 100,
+            strokeColor: 'black',
+        })
+
+        view.onResize = function (event) {
+            circle.position = view.center;
+        }
+    </script>
+</body>
+
+</html>

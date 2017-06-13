@@ -5,13 +5,40 @@
     <meta charset="UTF-8">
     <title>Document</title>
     <style>
+        html,
+        body {
+            height: 100%;
+        }
+
+        body {
+            margin: 0;
+        }
+
+        #progress {
+            height: 2px;
+            background: #3F51B5;
+            width: 0%;
+            transition: width 200ms ease;
+        }
     </style>
 </head>
 
 <body>
-    <div class="gist">
-        <script src="https://gist.github.com/Airead/ed63b9fffa0c80741517.js?file=example.html"></script>
+    <div>
+        <div id="progress"></div>
     </div>
+    <script>
+        var width = 0;
+        var progress = document.getElementById('progress');
+        var interval = setInterval(function() {
+            if (width > 100) {
+                clearInterval(interval);
+            }
+            width += (Math.random() * 14);
+            console.log('width', width);
+            progress.style.width = width + '%';
+        }, 200)
+    </script>
 </body>
 
 </html>
