@@ -10,8 +10,7 @@ module.exports = {
             "unix"
         ],
         "semi": [
-            1,
-            "always"
+            0,
         ],
         "no-console": [0],
         "comma-dangle": [0],

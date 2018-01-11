@@ -23,7 +23,6 @@
 
 <body>
     <canvas id="myCanvas" resize></canvas>
-    <script type="text/javascript" src="paperlib/dao.js"></script>
     <script>
         paper.install(window)
         paper.setup('myCanvas')
@@ -35,12 +34,11 @@
         vline.strokeColor = 'blue'
         vline.opacity = 0.3
 
-        var dao = new Dao(paper)
-
         view.onResize = function (event) {
             circle.position = view.center
         }
     </script>
+    <script type="text/javascript" src="paperlib/layout.js"></script>
 </body>
 
 </html>
