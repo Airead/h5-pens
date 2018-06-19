@@ -1,3 +1,5 @@
+/*eslint-env jquery*/
+/*eslint indent: [2, 4, {"SwitchCase": 1}]*/
 /*
  * @author : Ram Kulkarni (http://ramkulkarni.com)
  */
