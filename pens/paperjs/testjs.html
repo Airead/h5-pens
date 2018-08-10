@@ -16,20 +16,26 @@
 
         #myCanvas {
             width: 100%;
-            height: 100%;
+            height: 80%;
+        }
+        textarea {
+            width: 100%;
         }
     </style>
 </head>
 
 <body>
     <canvas id="myCanvas" resize></canvas>
+    <div>
+        <textarea name="" id="input" cols="30" rows="10">asdfs</textarea>
+    </div>
     <script src="paperlib/mindwave.js"></script>
     <script>
-        var mvstr =
         paper.install(window);
         paper.setup('myCanvas');
 
         var options = {
+            dx: 21,
             dy: 21,
             fontSize: 14,
             margin: 16,
@@ -39,6 +45,21 @@
         wm.test()
         wm.layoutWaves(new Point(100, 100))
         wm.drawWaves()
+
+        var input = document.getElementById('input')
+        var delayActionId = null
+        input.onkeyup = function(ev) {
+            if (delayActionId) {
+                clearTimeout(delayActionId)
+                delayActionId = null
+            }
+            delayActionId = setTimeout(function() {
+                wm.parseMindWaveLanguage(input.value)
+                wm.layoutWaves(new Point(100, 100))
+                project.activeLayer.removeChildren()
+                wm.drawWaves()
+            }, 300)
+        }
     </script>
 </body>
 

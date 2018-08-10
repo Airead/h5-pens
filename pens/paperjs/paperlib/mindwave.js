@@ -44,9 +44,14 @@ draw \p layoutWaves \p layoutWave \p drawWaves \p drawWave
 
 var mindWaveDesign = [
     "Data Define \\g Language Define \\h 联接线索(9为极) /p 解析 language \\o draw(paperjs)",
-    "联接线索 \\h when(n) \\h where(e) \\h who(o)"
+    "联接线索 \\h when(n) \\h where(e) \\h who(o)",
+    "联接线索 \\h thing(g) \\h which(h) \\h why(y)",
+    "联接线索 \\h thing(g) \\h which(h) \\h why(y)",
+    "联接线索 \\h thing(g) \\h which(h) \\h why(y)",
+    "联接线索 /h thing(g) \\h which(h) \\h why(y)",
+    "联接线索 /h thing(g) \\h which(h) \\h why(y)"
 ].join('\n')
-var conjunctionRegexp = new RegExp('\\\\[neoghyldp]|\/[neoghyldp]', 'g')
+var conjunctionRegexp = new RegExp('\\\\[neoghyldp]?|\/[neoghyldp]?', 'g')
 var keywordAndDetailRegexp = new RegExp('(.*)\\((.*)\\)')
 
 function WaveManager(scope, options) {
@@ -80,19 +85,19 @@ WaveManager.prototype.reset = function() {
 }
 
 WaveManager.prototype.parseLine = function (line) {
-    console.log('parseLine', line)
+    // console.log('parseLine', line)
     self = this
     var i
     var subwords = line.split(' ').map(function (x) { return x.trim() })
-    console.log('subwords', subwords)
+    // console.log('subwords', subwords)
     var isHeadWord = true
     var type = '-'
     var last_word_is_conjunction = true // 不支持两个连词连续出现
     var word_slice = []
     for (i = 0; i < subwords.length; i++) {
-        console.log('subword', subwords[i])
+        // console.log('subword', subwords[i])
         if (subwords[i].match(conjunctionRegexp)) {
-            console.log('hit conjunction', subwords[i])
+            // console.log('hit conjunction', subwords[i])
             if (last_word_is_conjunction) {
                 word_slice.push(subwords[i] + ' 解析出错了，亲！')
                 break
@@ -101,7 +106,7 @@ WaveManager.prototype.parseLine = function (line) {
             last_word_is_conjunction = true
             type = subwords[i]
         } else {
-            console.log('hit shi word', subwords[i])
+            // console.log('hit shi word', subwords[i])
             last_word_is_conjunction = false
             word_slice.push(subwords[i])
         }
@@ -110,7 +115,7 @@ WaveManager.prototype.parseLine = function (line) {
 
     function handlerWord(oneword) {
         word_slice = []
-        console.log('harndlerWord', oneword)
+        // console.log('harndlerWord', oneword)
         var word_info = self.parseWord(oneword)
         var parentId = self.wave_id - 1
         if (isHeadWord) {
@@ -138,7 +143,7 @@ WaveManager.prototype.parseWord = function (word) {
 }
 
 WaveManager.prototype.newWave = function (type, keyword, detail, parentId) {
-    console.log('newWave', Array.prototype.slice.call(arguments))
+    // console.log('newWave', Array.prototype.slice.call(arguments))
     var wave = {
         id: this.wave_id++,
         type: type,
@@ -162,11 +167,24 @@ WaveManager.prototype.test = function() {
 // point: startP, secondP, endP, textCX, keywordP, detailP
 WaveManager.prototype.layoutWave = function(startP, wave) {
     var o = Object.assign({}, this.options)
-    if (wave.type === '-') {
+    if (wave.type === 'link') {
+        wave.gui = this.waves_by_id[wave.parentId].gui
+        return wave.gui
+    } else if (wave.type === '-') {
         o.dx = o.margin / 2
         o.dy = 0
     } else if (wave.type[0] === '/') {
         o.dy = -o.dy
+    }
+
+    if (wave.parentId && this.waves_by_id[wave.parentId]) {
+        var refwave = this.getRefWave(this.waves_by_id[wave.parentId])
+        if (!refwave[wave.type[0]]) {
+            refwave[wave.type[0]] = 1
+        }
+        console.log('refwave', wave.type[0], wave.keyword, refwave[wave.type[0]], refwave)
+        o.dy *= (3*refwave[wave.type[0]] - 2)
+        refwave[wave.type[0]] += 1
     }
 
     // startP = startP.add(options.radius, 0)
@@ -177,7 +195,7 @@ WaveManager.prototype.layoutWave = function(startP, wave) {
         fontSize: o.fontSize
     });
     var detailItem = new this.scope.PointText({
-        point: startP.add(o.dx + o.margin/2, o.dy + o.fontSize),
+        point: startP,
         content: wave.detail,
         fillColor: 'black',
         fontSize: o.fontSize
@@ -190,7 +208,7 @@ WaveManager.prototype.layoutWave = function(startP, wave) {
     var endP = secondP.add(o.margin + textWidth, 0)
     var textCx = endP.add((secondP.x - endP.x)/2, 0)
     var keywordP = textCx.add(-keywordItem.bounds.width*0.55, -o.margin/4)
-    var detailP = textCx.add(-detailItem.bounds.width/2, o.fontSize)
+    var detailP = textCx.add(-detailItem.bounds.width*0.55, o.fontSize)
 
     wave.gui = {
         startP: startP,
@@ -204,7 +222,17 @@ WaveManager.prototype.layoutWave = function(startP, wave) {
     return wave.gui
 }
 
+WaveManager.prototype.getRefWave = function(wave) {
+    while (wave.type === 'link' && wave.parentId && this.waves_by_id[wave.parentId]) {
+        wave = this.waves_by_id[wave.parentId]
+    }
+    return wave
+}
+
 WaveManager.prototype.drawWave = function(wave) {
+    if (wave.type === 'link') {
+        return
+    }
     var g = wave.gui
     var path = new this.scope.Path([g.startP, g.secondP, g.endP])
     path.strokeColor = 'black'
