@@ -23,19 +23,22 @@
 
 <body>
     <canvas id="myCanvas" resize></canvas>
+    <script src="paperlib/mindwave.js"></script>
     <script>
+        var mvstr =
         paper.install(window);
         paper.setup('myCanvas');
 
-        var circle = new Path.Circle({
-            center: view.center,
-            radius: 100,
-            strokeColor: 'black',
-        })
-
-        view.onResize = function (event) {
-            circle.position = view.center;
+        var options = {
+            dy: 21,
+            fontSize: 14,
+            margin: 16,
+            radius: 3,
         }
+        var wm = new WaveManager(paper, options)
+        wm.test()
+        wm.layoutWaves(new Point(100, 100))
+        wm.drawWaves()
     </script>
 </body>
 
