@@ -55,7 +55,7 @@ function WaveManager(scope, options) {
     this.waves_by_id = {}
     this.waves_by_keyword = {}
     this.scope = scope
-    this.options = options || { dy: 21, fontSize: 14, margin: 16, radius: 3, }
+    this.options = options || { dx: 21, dy: 21, fontSize: 14, margin: 16, radius: 3, }
 }
 
 /*
@@ -161,28 +161,36 @@ WaveManager.prototype.test = function() {
 // options: dy, fontSize, margin, radius
 // point: startP, secondP, endP, textCX, keywordP, detailP
 WaveManager.prototype.layoutWave = function(startP, wave) {
+    var o = Object.assign({}, this.options)
+    if (wave.type === '-') {
+        o.dx = o.margin / 2
+        o.dy = 0
+    } else if (wave.type[0] === '/') {
+        o.dy = -o.dy
+    }
+
     // startP = startP.add(options.radius, 0)
     var keywordItem = new this.scope.PointText({
         point: startP,
         content: wave.keyword,
         fillColor: 'black',
-        fontSize: this.options.fontSize
+        fontSize: o.fontSize
     });
     var detailItem = new this.scope.PointText({
-        point: startP.add(this.options.dy + this.options.margin/2, this.options.dy + this.options.fontSize),
+        point: startP.add(o.dx + o.margin/2, o.dy + o.fontSize),
         content: wave.detail,
         fillColor: 'black',
-        fontSize: this.options.fontSize
+        fontSize: o.fontSize
     })
     var textWidth = Math.max(keywordItem.bounds.width, detailItem.bounds.width)
     keywordItem.remove()
     detailItem.remove()
 
-    var secondP = startP.add(this.options.dy)
-    var endP = secondP.add(this.options.margin + textWidth, 0)
+    var secondP = startP.add(o.dx, o.dy)
+    var endP = secondP.add(o.margin + textWidth, 0)
     var textCx = endP.add((secondP.x - endP.x)/2, 0)
-    var keywordP = textCx.add(-keywordItem.bounds.width*0.55, -this.options.margin/4)
-    var detailP = textCx.add(-detailItem.bounds.width/2, this.options.fontSize)
+    var keywordP = textCx.add(-keywordItem.bounds.width*0.55, -o.margin/4)
+    var detailP = textCx.add(-detailItem.bounds.width/2, o.fontSize)
 
     wave.gui = {
         startP: startP,
@@ -191,7 +199,7 @@ WaveManager.prototype.layoutWave = function(startP, wave) {
         textCx: textCx,
         keywordP: keywordP,
         detailP: detailP,
-        options: this.options,
+        options: o,
     }
     return wave.gui
 }
