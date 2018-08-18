@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>test paperjs</title>
+    <!-- Load the Paper.js library -->
+    <script type="text/javascript" src="../../js/paper/paper-full.min.js"></script>
+    <style>
+        body {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+        .container{
+            display: flex;
+            height: 100%;
+            width: 100%;
+            /* align-items: stretch; */
+        }
+        #files {
+            position: relative;
+            height: 100%;
+            width: 100px;
+            overflow: scroll;
+            border-right: 1px solid black;
+        }
+        .content {
+            display: flex;
+            flex-direction: column;
+            align-items: stretch;
+            flex-grow: 1;
+        }
+        #myCanvas {
+            flex-grow: 1;
+        }
+        #input {
+            width: 100%;
+            height: 100px;
+        }
+
+        #files ul {
+            padding: 1px;
+            margin: 1px;
+            height: 100%;
+            overflow: scroll;
+        }
+
+        #files ul li a {
+            display: inline-block;
+            width: 100%;
+        }
+
+        #files ul li a:hover {
+            color: red;
+            background: #037;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div id="files">
+            <ul>
+                <li><a href="?file=f1">f1</a></li>
+            </ul>
+        </div>
+        <div class="content">
+            <canvas id="myCanvas"></canvas>
+            <textarea name="" id="input" cols="30" rows="10">asdfs</textarea>
+        </div>
+    </div>
+    <script src="paperlib/mindwave.js"></script>
+    <script>
+        var query = getQuery(location.search.slice(1))
+        paper.install(window);
+        paper.setup('myCanvas');
+
+        var options = {
+            dx: 21,
+            dy: 21,
+            fontSize: 14,
+            margin: 16,
+            radius: 3,
+        }
+        var wm = new WaveManager(paper, options)
+
+        var inputItem = document.getElementById('input')
+        var filesItem = document.getElementById('files')
+        var delayActionId = null
+        inputItem.onkeyup = function(ev) {
+            if (delayActionId) {
+                clearTimeout(delayActionId)
+                delayActionId = null
+            }
+            delayActionId = setTimeout(function() {
+                localStorage.setItem(query.file, inputItem.value)
+                wm.parseMindWaveLanguage(inputItem.value)
+                wm.layoutWaves(new Point(10, 100))
+                project.activeLayer.removeChildren()
+                wm.drawWaves()
+            }, 300)
+        }
+
+        function getQuery(querystring) {
+            var query = {}
+            var fields = querystring.split('&')
+            for (var i = 0; i < fields.length; i++) {
+                if (fields[i].indexOf('=') >= 0) {
+                    var subs = fields[i].split('=')
+                    query[subs[0]] = subs[1]
+                }
+            }
+            return query
+        }
+
+        function updateContent(content) {
+            inputItem.value = content
+            inputItem.onkeyup()
+        }
+
+        function updateFileList() {
+            var files = Object.keys(localStorage).sort()
+            var ul = document.createElement('ul')
+            for (var i = 0; i < files.length; i++) {
+                var li = document.createElement('li')
+                var a = document.createElement('a')
+                a.href = '?file=' + files[i]
+                a.innerHTML = files[i]
+                li.appendChild(a)
+                ul.appendChild(li)
+            }
+            filesItem.innerHTML = ''
+            filesItem.appendChild(ul)
+            return ul
+        }
+
+        query.file = query.file || 'untitled'
+        document.title = query.file
+        updateContent(localStorage.getItem(query.file) || '')
+        updateFileList()
+
+        var lastPoint;
+        view.onMouseDown = function(event) {
+            if (event.modifiers.space) {
+                lastPoint = paper.view.projectToView(event.point);
+                return;
+            }
+        }
+        view.onMouseDrag = function(event) {
+            if (event.modifiers.space) {
+                var point = paper.view.projectToView(event.point);
+                var last = paper.view.viewToProject(lastPoint);
+                paper.view.scrollBy(last.subtract(event.point));
+                lastPoint = point;
+            }
+        }
+    </script>
+</body>
+
+</html>

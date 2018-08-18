@@ -57,10 +57,11 @@ var keywordAndDetailRegexp = new RegExp('(.*)\\((.*)\\)')
 function WaveManager(scope, options) {
     this.wave_id = 1
     this.waves = []
-    this.waves_by_id = {}
-    this.waves_by_keyword = {}
+    this.mindWaveCount = 0
+    this.wavesById = {}
+    this.wavesByKeyword = {}
     this.scope = scope
-    this.options = options || { dx: 21, dy: 21, fontSize: 14, margin: 16, radius: 3, }
+    this.options = options || {startPoint: new scope.Point(10, 100), dx: 21, dy: 21, fontSize: 14, margin: 16, radius: 3}
 }
 
 /*
@@ -71,17 +72,20 @@ parseMindWaveLanguage /h reset
 WaveManager.prototype.parseMindWaveLanguage = function (mvstr) {
     console.log('parseMindWaveLanguage', mvstr)
     this.reset()
-    var lines = mvstr.split('\n')
+    var lines = mvstr.split('\n').map(function(x) {return x.trim()})
     for (var i = 0; i < lines.length; i++) {
-        this.parseLine(lines[i])
+        if (lines[i]) {
+            this.parseLine(lines[i])
+        }
     }
 }
 
 WaveManager.prototype.reset = function() {
     this.wave_id = 1
     this.waves = []
-    this.waves_by_id = {}
-    this.waves_by_keyword = {}
+    this.mindWaveCount = 0
+    this.wavesById = {}
+    this.wavesByKeyword = {}
 }
 
 WaveManager.prototype.parseLine = function (line) {
@@ -120,8 +124,8 @@ WaveManager.prototype.parseLine = function (line) {
         var parentId = self.wave_id - 1
         if (isHeadWord) {
             isHeadWord = false
-            if (self.waves_by_keyword[word_info.keyword]) {
-                parentId = self.waves_by_keyword[word_info.keyword][0].id
+            if (self.wavesByKeyword[word_info.keyword]) {
+                parentId = self.wavesByKeyword[word_info.keyword][0].id
                 type = 'link'
             }
         }
@@ -152,11 +156,11 @@ WaveManager.prototype.newWave = function (type, keyword, detail, parentId) {
         parentId: parentId,
     }
     this.waves.push(wave)
-    this.waves_by_id[wave.id] = wave
-    if (!this.waves_by_keyword[wave.keyword]) {
-        this.waves_by_keyword[wave.keyword] = []
+    this.wavesById[wave.id] = wave
+    if (!this.wavesByKeyword[wave.keyword]) {
+        this.wavesByKeyword[wave.keyword] = []
     }
-    this.waves_by_keyword[wave.keyword].unshift(wave)
+    this.wavesByKeyword[wave.keyword].unshift(wave)
 }
 
 WaveManager.prototype.test = function() {
@@ -168,17 +172,19 @@ WaveManager.prototype.test = function() {
 WaveManager.prototype.layoutWave = function(startP, wave) {
     var o = Object.assign({}, this.options)
     if (wave.type === 'link') {
-        wave.gui = this.waves_by_id[wave.parentId].gui
+        wave.gui = this.wavesById[wave.parentId].gui
         return wave.gui
     } else if (wave.type === '-') {
+        this.mindWaveCount += 1
+        startP = new this.scope.Point(0, 4*(this.mindWaveCount-1)*o.dy).add(this.options.startPoint)
         o.dx = o.margin / 2
         o.dy = 0
     } else if (wave.type[0] === '/') {
         o.dy = -o.dy
     }
 
-    if (wave.parentId && this.waves_by_id[wave.parentId]) {
-        var refwave = this.getRefWave(this.waves_by_id[wave.parentId])
+    if (wave.parentId && this.wavesById[wave.parentId]) {
+        var refwave = this.getRefWave(this.wavesById[wave.parentId])
         if (!refwave[wave.type[0]]) {
             refwave[wave.type[0]] = 1
         }
@@ -207,7 +213,7 @@ WaveManager.prototype.layoutWave = function(startP, wave) {
     var secondP = startP.add(o.dx, o.dy)
     var endP = secondP.add(o.margin + textWidth, 0)
     var textCx = endP.add((secondP.x - endP.x)/2, 0)
-    var keywordP = textCx.add(-keywordItem.bounds.width*0.55, -o.margin/4)
+    var keywordP = textCx.add(-keywordItem.bounds.width*0.55, -o.fontSize/4)
     var detailP = textCx.add(-detailItem.bounds.width*0.55, o.fontSize)
 
     wave.gui = {
@@ -223,8 +229,8 @@ WaveManager.prototype.layoutWave = function(startP, wave) {
 }
 
 WaveManager.prototype.getRefWave = function(wave) {
-    while (wave.type === 'link' && wave.parentId && this.waves_by_id[wave.parentId]) {
-        wave = this.waves_by_id[wave.parentId]
+    while (wave.type === 'link' && wave.parentId && this.wavesById[wave.parentId]) {
+        wave = this.wavesById[wave.parentId]
     }
     return wave
 }
@@ -258,6 +264,7 @@ WaveManager.prototype.drawWave = function(wave) {
 }
 
 WaveManager.prototype.layoutWaves = function(startPoint) {
+    this.options.startPoint = startPoint = startPoint || this.options.startPoint
     for (var i = 0; i < this.waves.length; i++) {
         this.layoutWave(startPoint, this.waves[i])
         startPoint = this.waves[i].gui.endP
